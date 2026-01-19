@@ -1,3 +1,4 @@
+package Week1;
 import java.util.Scanner;
 
 public class Array1 {
@@ -20,3 +21,6 @@ public class Array1 {
     }
 
 }
+
+
+
