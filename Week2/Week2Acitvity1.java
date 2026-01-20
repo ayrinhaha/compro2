@@ -43,4 +43,3 @@ public class Week2Acitvity1 {
 
     }
 }
-
