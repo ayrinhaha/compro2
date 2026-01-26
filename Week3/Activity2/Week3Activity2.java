@@ -44,4 +44,5 @@ public class Week3Activity2 {
         return sum;
 
     }
+    // not yet final, fix the out of bounds errorrrrrrr
 }
