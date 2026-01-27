@@ -1,3 +1,4 @@
+package Activity2;
 import java.util.Scanner;
 
 public class Week3Activity2 {
@@ -23,9 +24,10 @@ public class Week3Activity2 {
                 matrix1[i][j] = sc.nextDouble();
             }
         }
-
-        System.out.println("Sum of the elements at column " + " is " + sumMajorDiagonal(matrix2));
-        sc.close();
+        for (int column = 0; column < matrix1[0].length; column++) {
+            System.out.println("Sum of the elements at column " + " is " + sumMajorDiagonal(matrix2));
+            sc.close();
+        }
     }
 
     public static double sumColumn(double[][] m, int columnIndex) {
