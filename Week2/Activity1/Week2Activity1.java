@@ -66,8 +66,8 @@ public class Week2Activity1 {
             boolean booked = false;
 
             while (!booked) {
-                int randomRow = (int) (Math.random() * 5);  // 0-4
-                int randomCol = (int) (Math.random() * 8);  // 0-7
+                int randomRow = (int) (Math.random() * 5);  
+                int randomCol = (int) (Math.random() * 8);  
 
                 if (theater[randomRow][randomCol] == 0) {
                     theater[randomRow][randomCol] = 1;
@@ -76,7 +76,7 @@ public class Week2Activity1 {
                 }
             }
 
-            // Print updated seating chart
+            // print updated seating chart
             System.out.println("\n Updated Theater Seating Chart");
             for (int i = 0; i < theater.length; i++) {
                 for (int j = 0; j < theater[i].length; j++) {
