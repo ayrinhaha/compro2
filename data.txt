@@ -1,0 +1,5 @@
+First Name: Irene
+Last Name: Pingol
+Age: 18
+Email: irenemae.pingol@lorma.edu
+Phone: 12326576
