@@ -18,7 +18,7 @@ public class Grades {
         int menuChoice;
         
         do{
-        System.out.println("Menu\n[1] Add Grade for subject\n[2] Exit");
+        System.out.print("Menu\n[1] Add Grade for subject\n[2] Exit\nInput choice: ");
         menuChoice = sc.nextInt();
         if (menuChoice == 1){
             for (int r = 0; r < 5; r++) {
