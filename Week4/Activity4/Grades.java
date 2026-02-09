@@ -16,49 +16,55 @@ public class Grades {
 
         Scanner sc = new Scanner(System.in);
         int menuChoice;
-        
-        do{
-        System.out.print("Menu\n[1] Add Grade for subject\n[2] Exit\nInput choice: ");
-        menuChoice = sc.nextInt();
-        if (menuChoice == 1){
-            for (int r = 0; r < 5; r++) {
-                System.out.print("Enter subject name: ");
-                names[r] = sc.next();
 
-                System.out.print("Enter prelim grade: ");
-                try {
-                    gradeData[r][0] = sc.nextDouble();
-                } catch (InputMismatchException e) {
-                    System.out.println("Invalid number.");
+        do {
+            System.out.print("Menu\n[1] Add Grade for subject\n[2] Display grades\n[3] Exit\nInput choice: ");
+            menuChoice = sc.nextInt();
+            if (menuChoice == 1) {
+                for (int r = 0; r < 5; r++) {
+                    System.out.print("Enter subject name: ");
+                    names[r] = sc.next();
+
+                    System.out.print("Enter prelim grade: ");
+                    try {
+                        gradeData[r][0] = sc.nextDouble();
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid number.");
+                    }
+
+                    System.out.print("Enter midterm grade: ");
+                    try {
+                        gradeData[r][1] = sc.nextDouble();
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid number");
+                    }
+
+                    System.out.print("Enter finals grade: ");
+                    try {
+                        gradeData[r][2] = sc.nextDouble();
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid number");
+                    }
+
+                    sc.nextLine();
+                    System.out.println();
+
                 }
-
-                System.out.print("Enter midterm grade: ");
-                try {
-                    gradeData[r][1] = sc.nextDouble();
-                } catch (InputMismatchException e) {
-                    System.out.println("Invalid number");
+            } else if (menuChoice == 2) {
+                System.out.println("\n-- Grade Table --");
+                System.out.println("Subject\tGrade");
+                for (int i = 0; i < gradeData.length; i++) {
+                    System.out.println(gradeData[i] + "\t" + names[i]);
                 }
-
-                System.out.print("Enter finals grade: ");
-                try {
-                    gradeData[r][2] = sc.nextDouble();
-                } catch (InputMismatchException e) {
-                    System.out.println("Invalid number");
-                }
-
-                sc.nextLine();
-                System.out.println();
-
+            } else {
+                System.out.println("Goodbye... Muwah!");
             }
-        }
-        else 
-            System.out.println("Goodbye... Muwah!");
-    
 
-        } while(menuChoice!=2);
+        } while (menuChoice != 2);
 
-    writeData();
+        writeData();
     }
+
     public static void writeData() {
         StringBuilder sb = new StringBuilder();
 
@@ -84,4 +90,3 @@ public class Grades {
         System.out.println(sb.toString());
     }
 }
-
