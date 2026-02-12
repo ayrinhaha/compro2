@@ -1,4 +1,4 @@
-package Week1.practice;
+package practice.Week1;
 import java.util.Scanner;
 
 public class Array1 {

@@ -1,4 +1,4 @@
-package Week2.practice;
+package practice.Week2;
 
 public class TwoDimensionalArray {
     public static void main(String[] args) {

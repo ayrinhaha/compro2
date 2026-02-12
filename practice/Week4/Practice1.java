@@ -1,4 +1,4 @@
-package Week4.practice;
+package practice.Week4;
 
 import java.io.FileWriter;
 import java.io.IOException;
