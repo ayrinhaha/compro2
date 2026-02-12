@@ -3,7 +3,7 @@ package Activity3;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Week3Activity4 {
+public class GradesNestedMenu {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String[] subjects = { "COMPRO2", "DSA", "OOP" };

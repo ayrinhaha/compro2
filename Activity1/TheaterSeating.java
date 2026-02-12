@@ -1,8 +1,8 @@
-package Week2.Activity1;
+package Activity1;
 
 import java.util.*;
 
-public class Week2Activity1 {
+public class TheaterSeating {
 
     public static void main(String[] args) {
         int[] theaterRow = {0, 0, 0, 0, 0, 0, 0, 0};

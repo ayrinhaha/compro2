@@ -2,7 +2,7 @@ package Activity2;
 
 import java.util.Scanner;
 
-public class Week3Activity2 {
+public class ColumnDiagonal {
 
     public static void main(String[] args) {
 
