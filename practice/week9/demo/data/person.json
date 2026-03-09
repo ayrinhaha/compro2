@@ -1,0 +1,17 @@
+ [
+  {
+    "firstName":"Irene",
+    "lastName": "Pingol",
+    "age": 18,
+    "emailAddress": "irenemae.pingol@lorma.edu",
+    "phoneNumber": "000000000000",
+    "dateOfBirth": "2007-04-26",
+    "homeAddress": "Purok 1, Galongen, Bacnotan, LU",
+    "isEmployed": "false",
+    "nationality": "Pipino",
+    "gender": "bading"
+    
+  }
+  
+
+]
