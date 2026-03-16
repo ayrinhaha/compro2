@@ -1,0 +1,3 @@
+ras : 0
+ren : 10
+rinhaha : 10
