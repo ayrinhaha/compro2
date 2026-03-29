@@ -1,7 +1,21 @@
-package com.ayrin;
+package com.ayrinhaha;
 
 import java.util.*;
 import java.io.*;
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
+
+class User {
+    String username;
+    String password;
+    int score;
+
+    User(String username, String password, int score){
+        this.username = username;
+        this.password = password;
+        this.score = score;
+    }
+}
 
 public class Hangman {
 
@@ -14,9 +28,6 @@ public class Hangman {
         int[] playerScores = new int[50];
         int playerCount = 0; // counter for total players
 
-        int maxIncorrect = 10; // maximum number of incorrect guesses allowed
-        int maxScore = 10; // maximum points a player can earn per game
-
         boolean morePlayers = true; // flag to check if there are more players
 
         System.out.println("===== HANGMAN GAME =====");
@@ -24,8 +35,17 @@ public class Hangman {
         System.out.println("2. Sign Up");
         System.out.print("Choice: ");
 
-        int choice = sc.nextInt();
-        sc.nextLine();
+        int choice;
+        while(true){
+            try{
+                choice = sc.nextInt();
+                sc.nextLine();
+                break;
+            } catch(InputMismatchException e){
+                System.out.print("Invalid input. Enter 1 or 2: ");
+                sc.nextLine();
+            }
+        }
 
         String playerName;
 
@@ -45,7 +65,10 @@ public class Hangman {
             playerNames[playerCount] = playerName;
 
             // choose difficulty and load words
-            ArrayList<String> wordBank = chooseDifficulty();
+            Object[] data = chooseDifficulty();
+            ArrayList<String> wordBank = (ArrayList<String>) data[0];
+            int maxIncorrect = (int) data[1];
+            int maxScore = (int) data[2];
 
             // play a round of hangman and get the score
             int score = playGame(wordBank, maxIncorrect, maxScore);
@@ -65,23 +88,37 @@ public class Hangman {
     }
 
     // choose difficulty and load words from txt file
-    public static ArrayList<String> chooseDifficulty() throws Exception {
+    public static Object[] chooseDifficulty() throws Exception {
 
         Scanner sc = new Scanner(System.in);
+        int choice;
 
-        System.out.println("\nSelect Difficulty");
-        System.out.println("1. Easy");
-        System.out.println("2. Medium");
-        System.out.println("3. Hard");
+        while(true){
+            try{
+                System.out.println("\nSelect Difficulty");
+                System.out.println("1. Easy");
+                System.out.println("2. Medium");
+                System.out.println("3. Hard");
 
-        int choice = sc.nextInt();
+                choice = sc.nextInt();
+
+                if(choice >= 1 && choice <= 3)
+                    break;
+                else
+                    System.out.println("Invalid choice. Try again.");
+
+            } catch(InputMismatchException e){
+                System.out.println("Invalid input. Enter numbers only.");
+                sc.nextLine();
+            }
+        }
 
         if(choice == 1)
-            return loadWords("easy.txt");
+            return new Object[]{loadWords("easy.txt"), 7, 5};
         else if(choice == 2)
-            return loadWords("medium.txt");
+            return new Object[]{loadWords("medium.txt"), 10, 7};
         else
-            return loadWords("hard.txt");
+            return new Object[]{loadWords("hard.txt"), 13, 10};
     }
 
     // load words from txt file
@@ -89,14 +126,25 @@ public class Hangman {
 
         ArrayList<String> wordBank = new ArrayList<>();
 
-        File file = new File(filename);
-        Scanner reader = new Scanner(file);
+        try{
+            File file = new File(filename);
+            Scanner reader = new Scanner(file);
 
-        while(reader.hasNextLine()){
-            wordBank.add(reader.nextLine());
+            while(reader.hasNextLine()){
+                String word = reader.nextLine().trim();
+                if(!word.isEmpty())
+                    wordBank.add(word);
+            }
+
+            reader.close();
+
+        } catch(FileNotFoundException e){
+            System.out.println("Error: " + filename + " not found.");
         }
 
-        reader.close();
+        if(wordBank.isEmpty()){
+            wordBank.add("default");
+        }
 
         return wordBank;
     }
@@ -112,20 +160,32 @@ public class Hangman {
         System.out.print("Password: ");
         String pass = sc.nextLine();
 
-        BufferedReader br = new BufferedReader(new FileReader("users.json"));
+        Gson gson = new Gson();
+        File file = new File("users.json");
 
-        String line;
-
-        while((line = br.readLine()) != null){
-
-            if(line.contains(user) && line.contains(pass)){
-                br.close();
-                System.out.println("Login successful!");
-                return user;
-            }
+        if(!file.exists()){
+            System.out.println("No users found. Please sign up first.");
+            return null;
         }
 
-        br.close();
+        try{
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            ArrayList<User> users = gson.fromJson(reader, new TypeToken<ArrayList<User>>(){}.getType());
+            reader.close();
+
+            if(users != null){
+                for(User u : users){
+                    if(u.username.equals(user) && u.password.equals(pass)){
+                        System.out.println("Login successful!");
+                        return user;
+                    }
+                }
+            }
+
+        } catch(Exception e){
+            System.out.println("Error reading user data.");
+        }
+
         return null;
     }
 
@@ -140,11 +200,38 @@ public class Hangman {
         System.out.print("Create Password: ");
         String pass = sc.nextLine();
 
-        FileWriter fw = new FileWriter("users.json", true);
+        Gson gson = new Gson();
+        File file = new File("users.json");
 
-        fw.write("{\"username\":\""+user+"\",\"password\":\""+pass+"\",\"score\":0}\n");
+        ArrayList<User> users = new ArrayList<>();
 
-        fw.close();
+        try{
+            if(file.exists()){
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                users = gson.fromJson(reader, new TypeToken<ArrayList<User>>(){}.getType());
+                reader.close();
+
+                if(users == null)
+                    users = new ArrayList<>();
+            }
+
+            for(User u : users){
+                if(u.username.equals(user)){
+                    System.out.println("Username already exists.");
+                    return null;
+                }
+            }
+
+            users.add(new User(user, pass, 0));
+
+            FileWriter writer = new FileWriter(file);
+            gson.toJson(users, writer);
+            writer.close();
+
+        } catch(Exception e){
+            System.out.println("Error saving user.");
+            return null;
+        }
 
         System.out.println("Account created!");
 
@@ -154,40 +241,33 @@ public class Hangman {
     // save score
     public static void saveScore(String user, int score) throws Exception {
 
-    File file = new File("users.json");
-    ArrayList<String> lines = new ArrayList<>();
+        Gson gson = new Gson();
+        File file = new File("users.json");
 
-    BufferedReader br = new BufferedReader(new FileReader(file));
-    String line;
+        if(!file.exists()) return;
 
-    while((line = br.readLine()) != null){
+        try{
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            ArrayList<User> users = gson.fromJson(reader, new TypeToken<ArrayList<User>>(){}.getType());
+            reader.close();
 
-        if(line.contains("\"username\":\"" + user + "\"")){
+            if(users == null) return;
 
-            int scoreIndex = line.indexOf("\"score\":") + 8;
+            for(User u : users){
+                if(u.username.equals(user)){
+                    u.score += score;
+                    break;
+                }
+            }
 
-            int endIndex = line.indexOf("}", scoreIndex);
+            FileWriter writer = new FileWriter(file);
+            gson.toJson(users, writer);
+            writer.close();
 
-            int oldScore = Integer.parseInt(line.substring(scoreIndex, endIndex));
-
-            int newScore = oldScore + score;
-
-            line = line.substring(0, scoreIndex) + newScore + "}";
+        } catch(Exception e){
+            System.out.println("Error updating score.");
         }
-
-        lines.add(line);
     }
-
-    br.close();
-
-    FileWriter fw = new FileWriter(file);
-
-    for(String updatedLine : lines){
-        fw.write(updatedLine + "\n");
-    }
-
-    fw.close();
-}
 
     // ask if another player wants to play
     public static boolean anotherPlayer() {
@@ -207,7 +287,7 @@ public class Hangman {
                 return false;
 
             else
-                System.out.println("invalid input. please enter y or n only.");
+                System.out.println("Invalid input. Please enter y or n only.");
         }
     }
 
@@ -216,16 +296,12 @@ public class Hangman {
 
         Scanner sc = new Scanner(System.in);
 
-        // select a random word from the word bank
         String word = selectRandomWord(wordBank);
-
-        // initialize the hidden word with asterisks
         String hiddenWord = initializeHiddenWord(word);
 
         char[] guessedLetters = new char[26];
         int guessedCount = 0;
         int incorrectCount = 0;
-        int score = 0;
 
         while (incorrectCount < maxIncorrect) {
 
@@ -233,8 +309,6 @@ public class Hangman {
                     " (Guesses left: " + (maxIncorrect - incorrectCount) + ") > ");
 
             char guess = getLetterGuess(sc);
-
-            incorrectCount++;
 
             if (letterAlreadyGuessed(guess, guessedLetters, guessedCount)) {
                 System.out.println(guess + " is already guessed");
@@ -246,15 +320,9 @@ public class Hangman {
             boolean correct = isGuessCorrect(word, guess);
 
             if (correct) {
-
                 hiddenWord = updateHiddenWord(word, hiddenWord, guess);
-
-                score++;
-
-                if(score > maxScore)
-                    score = maxScore;
-
             } else {
+                incorrectCount++;
                 System.out.println(guess + " is not in the word");
             }
 
@@ -268,7 +336,12 @@ public class Hangman {
         System.out.println("GAME OVER");
         System.out.println("The word is " + word + ".");
 
-        return score;
+        int finalScore = maxScore - incorrectCount;
+
+        if(finalScore < 0)
+            finalScore = 0;
+
+        return finalScore;
     }
 
     // select a random word
