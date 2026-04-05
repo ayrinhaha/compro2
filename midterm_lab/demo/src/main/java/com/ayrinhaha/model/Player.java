@@ -1,61 +1,38 @@
 package com.ayrinhaha.model;
 
+/**
+ * Represents a player in the game.
+ *
+ * @author ayrinhaha
+ */
 public class Player {
 
     private String name;
     private int score;
-    private int playerID;
-    private int choice;
+    private GameMove currentMove;
 
-    public int getChoice() {
-        return choice;
-    }
-
-    public void setChoice(int choice) {
-        this.choice = choice;
+    public Player(String name) {
+        this.name = name;
+        this.score = 0;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getScore() {
         return score;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public GameMove getCurrentMove() {
+        return currentMove;
     }
 
-    public int getPlayerID() {
-        return playerID;
+    public void setCurrentMove(GameMove move) {
+        this.currentMove = move;
     }
 
-    public void setPlayerID(int playerID) {
-        this.playerID = playerID;
+    public void incrementScore() {
+        score++;
     }
-
-    public Player(String name, int score, int playerID, int choice) {
-        this.name = name;
-        this.score = 0;
-        this.playerID = playerID;
-        this.choice = choice;
-    }
-
-    // public int incrementScore(){
-    //     //adds score/win
-    //     return score;
-    // }
-
-    public int getWinRate(int win, int loss){
-        return win / (win + loss);
-
-    }
-
 }
-
-

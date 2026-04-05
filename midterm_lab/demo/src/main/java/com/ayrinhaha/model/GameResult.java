@@ -1,59 +1,70 @@
 package com.ayrinhaha.model;
 
+/**
+ * Stores a single round result including both players.
+ *
+ * @author ayrinhaha
+ */
 public class GameResult {
-    private int p1Move;
-    private int p2Move;
-    private String winnerName;
+
     private int roundNumber;
 
-    public int getP1Move() {
-        return p1Move;
-    }
+    private String p1Name;
+    private String p2Name;
 
-    public void setP1Move(int p1Move) {
+    private String p1Move;
+    private String p2Move;
+
+    private String winnerName;
+
+    private int p1Score;
+    private int p2Score;
+
+    public GameResult(int roundNumber,
+                      String p1Name, String p2Name,
+                      String p1Move, String p2Move,
+                      String winnerName,
+                      int p1Score, int p2Score) {
+
+        this.roundNumber = roundNumber;
+        this.p1Name = p1Name;
+        this.p2Name = p2Name;
         this.p1Move = p1Move;
-    }
-
-    public int getP2Move() {
-        return p2Move;
-    }
-
-    public void setP2Move(int p2Move) {
         this.p2Move = p2Move;
-    }
-
-    public String getWinnerName() {
-        return winnerName;
-    }
-
-    public void setWinnerName(String winnerName) {
         this.winnerName = winnerName;
+        this.p1Score = p1Score;
+        this.p2Score = p2Score;
     }
 
     public int getRoundNumber() {
         return roundNumber;
     }
 
-    public void setRoundNumber(int roundNumber) {
-        this.roundNumber = roundNumber;
+    public String getP1Name() {
+        return p1Name;
     }
 
-    public GameResult(int p1Move, int p2Move, String winnerName, int roundNumber) {
-        this.p1Move = p1Move;
-        this.p2Move = p2Move;
-        this.winnerName = winnerName;
-        this.roundNumber = roundNumber;
+    public String getP2Name() {
+        return p2Name;
     }
 
-    @Override
-    public String toString() {
-        return String.format("""
-                ====== MATCH RESULTS ======
-                    Player 1 move:
-                    Player 2 move:
-                    Winner:
-                    Round:
-                       """, p1Move, p2Move, winnerName, roundNumber);
+    public String getP1Move() {
+        return p1Move;
     }
 
+    public String getP2Move() {
+        return p2Move;
+    }
+
+    public String getWinnerName() {
+        return winnerName;
+    }
+
+    public int getP1Score() {
+        return p1Score;
+    }
+
+    public int getP2Score() {
+        return p2Score;
+    }
 }
