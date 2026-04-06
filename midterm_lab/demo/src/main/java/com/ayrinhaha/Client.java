@@ -7,11 +7,11 @@ import java.util.*;
 /**
  * Client-side application for the multiplayer game.
  * Handles connection, authentication, gameplay input, and result display.
- * <p>
+ * 
  * Connects to a server at localhost:5000, performs login or registration,
  * plays 3 rounds of Rock-Paper-Scissors, and displays the final match result
  * along with the global leaderboard.
- * </p>
+ * 
  * 
  * @author ayrinhaha
  */
@@ -146,10 +146,6 @@ public class Client {
 
     /**
      * Handles the final match result and displays the global leaderboard.
-     * <p>
-     * Parses a server message of format: FINAL|Winner|Leaderboard
-     * Leaderboard entries are separated by ';'.
-     * </p>
      * 
      * @param response the server response string containing final results
      */

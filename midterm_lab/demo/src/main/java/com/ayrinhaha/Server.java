@@ -8,17 +8,17 @@ import java.util.InputMismatchException;
 
 /**
  * Game server for a 2-player Rock-Paper-Scissors session.
- * <p>
+ *
  * Handles client connections, authentication, game rounds, and final results.
  * Maintains global leaderboard using {@link PersistenceService}.
- * </p>
  * 
- * <p>
+ * 
+ * 
  * Server listens on port 5000 and accepts exactly two clients per session.
  * Each client authenticates or registers, plays 3 rounds, and receives round
  * results
  * and the final leaderboard.
- * </p>
+ * 
  * 
  * @author ayrinhaha
  */
@@ -59,11 +59,11 @@ public class Server {
 
     /**
      * Authenticates a player through client-server communication.
-     * <p>
+     * 
      * Reads authentication requests from the client, supports both LOGIN and
      * REGISTER.
      * Sends SUCCESS or FAIL messages back to the client depending on outcome.
-     * </p>
+     * 
      *
      * @param in  input stream from client
      * @param out output stream to client
@@ -104,11 +104,11 @@ public class Server {
 
     /**
      * Main entry point for the server application.
-     * <p>
+     * 
      * Starts a server on port 5000, accepts two clients, runs a 3-round game
      * session,
      * updates user stats, and sends final results and leaderboard to both clients.
-     * </p>
+     * 
      *
      * @param args command-line arguments (not used)
      */
