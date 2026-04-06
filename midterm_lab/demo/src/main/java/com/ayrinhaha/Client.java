@@ -7,24 +7,33 @@ import java.util.*;
 /**
  * Client-side application for the multiplayer game.
  * Handles connection, authentication, gameplay input, and result display.
- *
+ * <p>
+ * Connects to a server at localhost:5000, performs login or registration,
+ * plays 3 rounds of Rock-Paper-Scissors, and displays the final match result
+ * along with the global leaderboard.
+ * </p>
+ * 
  * @author ayrinhaha
  */
 public class Client {
 
+    /**
+     * Entry point for the client application.
+     * 
+     * @param args command-line arguments (not used)
+     */
     public static void main(String[] args) {
 
         try (Socket socket = new Socket("localhost", 5000);
-             Scanner sc = new Scanner(System.in)) {
+                Scanner sc = new Scanner(System.in)) {
 
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream())
-            );
-
+            // streams for communication with the server
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
             System.out.println("Connected. Waiting for START...");
 
+            // wait for server to send START signal
             if (!"START".equals(in.readLine())) {
                 System.out.println("Server error.");
                 return;
@@ -34,6 +43,7 @@ public class Client {
 
             String myName;
 
+            // user authentication loop
             while (true) {
 
                 System.out.println("[1] Login\n[2] Sign Up");
@@ -64,24 +74,28 @@ public class Client {
 
                 if (authResponse.startsWith("SUCCESS|")) {
                     myName = authResponse.split("\\|")[1];
-                    System.out.println("\nWelcome, " + myName + "!\n");
+                    System.out.println("\nWelcome to Rock, Paper, Scissors, " + myName + "!\n");
                     break;
                 } else {
                     System.out.println("Error: " + authResponse.split("\\|")[1]);
                 }
             }
 
+            // receive player names from server
             String names = in.readLine();
             String[] n = names.split("\\|");
 
             String p1Name = n[1];
             String p2Name = n[2];
 
+            // main game loop for 3 rounds
             for (int i = 1; i <= 10; i++) {
 
+                // wait for server signal (round start)
                 in.readLine();
 
                 int move;
+                // player move input
                 while (true) {
                     System.out.print(
                             "Round " + i +
@@ -89,14 +103,19 @@ public class Client {
 
                     try {
                         move = Integer.parseInt(sc.nextLine().trim());
-                        if (move >= 0 && move <= 2) break;
-                    } catch (Exception e) {}
+                        if (move >= 0 && move <= 2)
+                            break;
+                    } catch (Exception e) {
+                        // Ignore parse errors
+                    }
 
                     System.out.println("\nInvalid input.");
                 }
 
+                // send move to server
                 out.println(move);
 
+                // receive round result
                 String response = in.readLine();
 
                 if (response.startsWith("ROUND|")) {
@@ -113,6 +132,7 @@ public class Client {
                 }
             }
 
+            // receive final game result and leaderboard
             String finalResponse = in.readLine();
 
             if (finalResponse != null && finalResponse.startsWith("FINAL|")) {
@@ -125,7 +145,13 @@ public class Client {
     }
 
     /**
-     * Handles final game result and leaderboard display.
+     * Handles the final match result and displays the global leaderboard.
+     * <p>
+     * Parses a server message of format: FINAL|Winner|Leaderboard
+     * Leaderboard entries are separated by ';'.
+     * </p>
+     * 
+     * @param response the server response string containing final results
      */
     private static void handleFinal(String response) {
 
@@ -135,6 +161,14 @@ public class Client {
         System.out.println("Match Winner: " + parts[1]);
 
         System.out.println("\nCurrent Leaderboard:");
-        System.out.println(parts[2].replace("<br>", "\n"));
+
+        // Split leaderboard string into individual player entries
+        String[] players = parts[2].split(";");
+
+        for (String p : players) {
+            if (!p.trim().isEmpty()) {
+                System.out.println(p);
+            }
+        }
     }
 }
