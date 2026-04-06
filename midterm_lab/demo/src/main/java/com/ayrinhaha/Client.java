@@ -106,7 +106,7 @@ public class Client {
                         if (move >= 0 && move <= 2)
                             break;
                     } catch (Exception e) {
-                        // Ignore parse errors
+                        // ignore parse errors
                     }
 
                     System.out.println("\nInvalid input.");
