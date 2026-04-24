@@ -1,0 +1,44 @@
+[
+    {
+        "subject": "OOP",
+        "prelim": 90.0,
+        "midterm": 98.0,
+        "finals": 97.0
+    },
+    {
+        "subject": "COMPRO",
+        "prelim": 90.0,
+        "midterm": 99.0,
+        "finals": 97.0
+    },
+    {
+        "subject": "DSA",
+        "prelim": 90.0,
+        "midterm": 98.0,
+        "finals": 97.0
+    },
+    {
+        "subject": "UTS",
+        "prelim": 90.0,
+        "midterm": 99.0,
+        "finals": 89.0
+    },
+    {
+        "subject": "CFVE2",
+        "prelim": 90.0,
+        "midterm": 99.0,
+        "finals": 100.0
+    },
+    {
+        "subject": "MMW",
+        "prelim": 99.0,
+        "midterm": 90.0,
+        "finals": 89.0
+    },
+    {
+        "subject": "STS",
+        "prelim": 90.0,
+        "midterm": 99.0,
+        "finals": 98.0
+    }
+]
