@@ -62,8 +62,6 @@ public class WeatherService {
             if (e instanceof InterruptedException) {
                 Thread.currentThread().interrupt();
             }
-        } catch (JsonSyntaxException e) {
-            System.err.println("[Parsing Error] Could not parse the JSON response. Details: " + e.getMessage());
         }
 
         return null;
