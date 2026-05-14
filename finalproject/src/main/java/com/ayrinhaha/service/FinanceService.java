@@ -1,7 +1,8 @@
 package com.ayrinhaha.service;
 
 import com.ayrinhaha.model.*;
-import com.ayrinhaha.repository.Repository;
+import com.ayrinhaha.repo.Repository;
+
 import java.util.Scanner;
 
 public class FinanceService {
@@ -9,9 +10,10 @@ public class FinanceService {
     private Repository<Expense> expenses = new Repository<>();
     private Tuition tuition = new Tuition();
 
-    public void addExpense(Scanner sc) {
-        System.out.print("Enter name: ");
 
+    public void addExpense(Scanner sc) {
+
+        System.out.print("Enter expense name: ");
         String name = sc.next();
 
         System.out.print("Enter amount: ");
@@ -20,29 +22,44 @@ public class FinanceService {
         System.out.print("Enter category: ");
         String category = sc.next();
 
-        Expense exp = new Expense(name, amount, category);
+        Expense exp =
+                new Expense(name, amount, category);
+
         expenses.add(exp);
 
-        System.out.println("Expense added!");
+        exp.process();
+
+        System.out.println("\nExpense added successfully!");
     }
 
     public void viewExpenses() {
+
+        if (expenses.getAll().isEmpty()) {
+
+            System.out.println("\nNo expenses recorded.");
+            return;
+        }
+
         for (Expense e : expenses.getAll()) {
             System.out.println(e);
         }
     }
 
-    public void payTuition(Scanner sc) {
-        System.out.println("[1] DOWNPAYMENT\n[2] PRELIM\n[3] MIDTERMS\n[4] FINALS");
-        int choice = sc.nextInt();
 
-        Tuition.Stage stage = Tuition.Stage.values()[choice - 1];
-        tuition.pay(stage);
+    public void setupTuition(Scanner sc) {
 
-        System.out.println(stage + "paid!");
+        tuition.setupTuition(sc);
     }
 
+
+    public void payTuition(Scanner sc) {
+
+        tuition.payTuition(sc);
+    }
+
+
     public void viewTuition() {
+
         tuition.viewStatus();
     }
 }

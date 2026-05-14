@@ -1,27 +1,22 @@
 
-package main.java.com.ayrinhaha.network;
+package com.ayrinhaha.network;
 
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Client {
 
-    public void connect() {
+    public void send(String data) {
+        try (Socket socket = new Socket("localhost", 8000)) {
 
-        try {
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
-            // TODO:
-            // Connect to server
+            out.println(data);
 
-            Socket socket = new Socket("localhost", 5000);
-
-            // TODO:
-            // Send data to server
+            System.out.println("[Sent]: " + data);
 
         } catch (Exception e) {
-
-            // TODO:
-            // Handle connection errors
-
+            e.printStackTrace();
         }
     }
 }

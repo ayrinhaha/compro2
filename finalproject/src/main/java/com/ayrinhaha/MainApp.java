@@ -1,6 +1,9 @@
 
-
 package com.ayrinhaha;
+
+import com.ayrinhaha.network.Client;
+import com.ayrinhaha.service.*;
+import com.ayrinhaha.thread.AutoSaveThread;
 
 import java.util.Scanner;
 
@@ -10,66 +13,42 @@ public class MainApp {
 
         Scanner sc = new Scanner(System.in);
 
-        // TODO:
-        // Initialize services
+        FinanceService finance = new FinanceService();
+        JsonService json = new JsonService();
+        Client client = new Client();
 
-        // TODO:
-        // Start AutoSaveThread
+        // MULTITHREADING
+        AutoSaveThread thread = new AutoSaveThread(json, finance);
+        thread.start();
 
         int choice;
 
         do {
-
-            System.out.println("\n=== MAIN MENU ===");
-            System.out.println("1. Add Expense");
+            System.out.println("\n1. Add Expense");
             System.out.println("2. View Expenses");
             System.out.println("3. Pay Tuition");
-            System.out.println("4. Save Data");
-            System.out.println("5. Exit");
+            System.out.println("4. Save");
+            System.out.println("5. Send to Server");
+            System.out.println("6. Exit");
 
-            System.out.print("Enter choice: ");
             choice = sc.nextInt();
 
             switch (choice) {
 
-                case 1:
+                case 1 -> finance.addExpense(sc);
 
-                    // TODO:
-                    // Add expense logic
+                case 2 -> finance.viewExpenses();
 
-                    break;
+                case 3 -> finance.payTuition(sc);
 
-                case 2:
+                case 4 -> json.save(finance);
 
-                    // TODO:
-                    // View expenses
+                case 5 -> client.send("Finance data sent");
 
-                    break;
-
-                case 3:
-
-                    // TODO:
-                    // Tuition payment logic
-
-                    break;
-
-                case 4:
-
-                    // TODO:
-                    // Save data manually
-
-                    break;
-
-                case 5:
-
-                    System.out.println("Exiting system...");
-                    break;
-
-                default:
-
-                    System.out.println("Invalid choice.");
             }
 
-        } while (choice != 5);
+        } while (choice != 6);
+
+        System.out.println("System closed.");
     }
 }
