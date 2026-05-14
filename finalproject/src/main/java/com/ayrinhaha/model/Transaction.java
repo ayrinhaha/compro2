@@ -1,24 +1,17 @@
 package com.ayrinhaha.model;
 
-import java.time.LocalDateTime;
-
 public abstract class Transaction {
+
     protected String name;
     protected double amount;
-    protected LocalDateTime timestamp;
+    protected String timestamp;
 
     public Transaction(String name, double amount) {
         this.name = name;
-        setAmount(amount);
-    }
+        this.amount = amount;
 
-    public void setAmount(double amount) {
-        if (amount >= 0) {
-            this.amount = amount;
-        } else {
-
-            throw new IllegalArgumentException("Amount cannot be negative");
-        }
+        // simple timestamp
+        this.timestamp = java.time.LocalDateTime.now().toString();
     }
 
     public abstract void process();

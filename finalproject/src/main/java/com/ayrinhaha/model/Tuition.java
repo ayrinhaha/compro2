@@ -6,198 +6,96 @@ import java.util.Scanner;
 
 public class Tuition {
 
-    public enum Stage {
-        DOWNPAYMENT,
-        PRELIM,
-        MIDTERM,
-        FINALS
-    }
-
-    private double fullTuition;
-    private double discountedTuition;
-    private double scholarshipDiscount;
-
-    private Map<Stage, Double> paymentAmounts;
-    private Map<Stage, Boolean> paymentStatus;
-
-    public Tuition() {
-
-        paymentAmounts = new HashMap<>();
-        paymentStatus = new HashMap<>();
-
-        for (Stage stage : Stage.values()) {
-            paymentStatus.put(stage, false);
-        }
-    }
-
-    // =====================================
-    // Setup Tuition
-    // =====================================
-
-    public void setupTuition(Scanner sc) {
-
-        System.out.println("\n========== TUITION SETUP ==========");
-
-        System.out.print("Enter full semester tuition: ₱");
-        fullTuition = sc.nextDouble();
-
-        System.out.println("\nDo you have scholarship discount?");
-        System.out.println("1. Yes");
-        System.out.println("2. No");
-
-        System.out.print("\nChoice: ");
-        int choice = sc.nextInt();
-
-        if (choice == 1) {
-
-            System.out.print(
-                    "Enter scholarship discount percentage: ");
-
-            scholarshipDiscount = sc.nextDouble();
-
-        } else {
-
-            scholarshipDiscount = 0;
+        public enum Stage {
+                DOWNPAYMENT,
+                PRELIM,
+                MIDTERM,
+                FINALS
         }
 
-        computeTuitionBreakdown();
-    }
+        private double fullTuition;
+        private double discountedTuition;
+        private double discountRate;
 
-    // =====================================
-    // Compute Tuition
-    // =====================================
+        private Map<Stage, Double> amounts = new HashMap<>();
+        private Map<Stage, Boolean> status = new HashMap<>();
 
-    private void computeTuitionBreakdown() {
-
-        double discountAmount =
-                fullTuition * (scholarshipDiscount / 100);
-
-        discountedTuition =
-                fullTuition - discountAmount;
-
-        double perStage =
-                discountedTuition * 0.25;
-
-        for (Stage stage : Stage.values()) {
-            paymentAmounts.put(stage, perStage);
+        public Tuition() {
+                for (Stage s : Stage.values()) {
+                        status.put(s, false);
+                }
         }
 
-        showBreakdown();
-    }
+        // SETUP TUITION
+        public void setupTuition(Scanner sc) {
 
-    // =====================================
-    // Display Breakdown
-    // =====================================
+                System.out.print("\nEnter full tuition: ₱");
+                fullTuition = sc.nextDouble();
 
-    public void showBreakdown() {
+                System.out.print("Scholarship discount % (0 if none): ");
+                discountRate = sc.nextDouble();
 
-        System.out.println(
-                "\n========== TUITION BREAKDOWN ==========");
+                double discount = fullTuition * (discountRate / 100);
+                discountedTuition = fullTuition - discount;
 
-        System.out.println(
-                "Original Tuition: ₱" + fullTuition);
+                double perStage = discountedTuition * 0.25;
 
-        System.out.println(
-                "Scholarship Discount: "
-                        + scholarshipDiscount + "%");
+                for (Stage s : Stage.values()) {
+                        amounts.put(s, perStage);
+                }
 
-        System.out.println(
-                "Discounted Tuition: ₱"
-                        + discountedTuition);
-
-        System.out.println();
-
-        for (Stage stage : Stage.values()) {
-
-            System.out.println(
-                    stage + " (25%): ₱"
-                            + paymentAmounts.get(stage));
-        }
-    }
-
-    // =====================================
-    // Pay Tuition
-    // =====================================
-
-    public void payTuition(Scanner sc) {
-
-        System.out.println(
-                "\n====== PAYMENT STAGES ======");
-
-        int index = 1;
-
-        for (Stage stage : Stage.values()) {
-
-            System.out.println(
-                    index + ". "
-                            + stage
-                            + " - ₱"
-                            + paymentAmounts.get(stage));
-
-            index++;
+                System.out.println("\n=== TUITION BREAKDOWN ===");
+                System.out.println("Original: " + fullTuition);
+                System.out.println("Discounted: " + discountedTuition);
+                System.out.println("Each stage: " + perStage);
         }
 
-        System.out.print(
-                "\nSelect payment stage: ");
+        // PAY TUITION
+        public void payTuition(Scanner sc) {
 
-        int choice = sc.nextInt();
+                System.out.println("\n=== PAYMENT STAGES ===");
 
-        Stage selectedStage =
-                Stage.values()[choice - 1];
+                int i = 1;
+                for (Stage s : Stage.values()) {
+                        System.out.println(i + ". " + s + " - ₱" + amounts.get(s));
+                        i++;
+                }
 
-        System.out.println(
-                "\nYou are about to pay:");
+                System.out.print("\nSelect stage: ");
+                int choice = sc.nextInt();
 
-        System.out.println(
-                selectedStage
-                        + " - ₱"
-                        + paymentAmounts.get(selectedStage));
+                Stage selected = Stage.values()[choice - 1];
 
-        System.out.println("\nConfirm payment?");
-        System.out.println("1. Yes");
-        System.out.println("2. No");
+                System.out.println("You will pay: " + amounts.get(selected));
 
-        System.out.print("\nChoice: ");
+                System.out.print("Confirm? (1-Yes / 2-No): ");
+                int confirm = sc.nextInt();
 
-        int confirm = sc.nextInt();
+                if (confirm == 1) {
+                        status.put(selected, true);
+                        System.out.println(selected + " PAID!");
+                } else {
+                        System.out.println("Cancelled.");
+                }
 
-        if (confirm == 1) {
-
-            paymentStatus.put(selectedStage, true);
-
-            System.out.println(
-                    "\n✔ "
-                            + selectedStage
-                            + " successfully paid!");
-
-        } else {
-
-            System.out.println("\nPayment cancelled.");
+                viewStatus();
         }
 
-        viewStatus();
-    }
+        public void viewStatus() {
 
-    // =====================================
-    // View Payment Status
-    // =====================================
+                System.out.println("\n=== TUITION STATUS ===");
 
-    public void viewStatus() {
-
-        System.out.println(
-                "\n========== UPDATED STATUS ==========");
-
-        for (Stage stage : Stage.values()) {
-
-            String status =
-                    paymentStatus.get(stage)
-                            ? "PAID"
-                            : "UNPAID";
-
-            System.out.printf(
-                    "%-12s : %s%n",
-                    stage,
-                    status);
+                for (Stage s : Stage.values()) {
+                        System.out.println(s + " : " +
+                                        (status.get(s) ? "PAID" : "UNPAID"));
+                }
         }
-    }
+
+        public Map<Stage, Double> getAmounts() {
+                return amounts;
+        }
+
+        public Map<Stage, Boolean> getStatus() {
+                return status;
+        }
 }

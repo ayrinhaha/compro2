@@ -25,7 +25,7 @@ public class AutoSaveThread extends Thread {
 
                 jsonService.save(financeService);
 
-                System.out.println("[AutoSave Completed]");
+                //System.out.println("[AutoSave Completed]");
 
             } catch (InterruptedException e) {
                 System.out.println("[Thread Interrupted]");

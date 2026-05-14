@@ -1,29 +1,43 @@
-
 package com.ayrinhaha.service;
 
-import com.google.gson.Gson;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 
 public class JsonService {
 
-    private Gson gson = new Gson();
-    private String filePath = "data.json";
+    private String filePath = "finance_data.json";
 
     public void save(Object data) {
-        try (FileWriter writer = new FileWriter(filePath)) {
-            gson.toJson(data, writer);
-            System.out.println("[Saved to JSON]");
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+
+            writer.write(data.toString());
+
+            //System.out.println("\n[DATA SAVED SUCCESSFULLY]");
+
         } catch (Exception e) {
-            e.printStackTrace();
+
+            System.out.println("Error saving file.");
         }
     }
 
-    public <T> T load(Class<T> type) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            return gson.fromJson(reader, type);
+    public void load() {
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("finance_data.json"))) {
+
+            String line;
+
+            System.out.println("\n=== FILE CONTENT ===");
+
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+
         } catch (Exception e) {
-            System.out.println("[No saved data found]");
-            return null;
+            System.out.println("Error reading file.");
         }
     }
+
 }
