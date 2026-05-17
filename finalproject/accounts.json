@@ -1,46 +1,15 @@
 [
   {
-    "budget": 7787.0,
+    "budget": 7100.0,
     "expenses": [
       {
         "category": "Misc",
         "month": 5,
         "name": "Shopee",
-        "amount": 213.0,
-        "timestamp": "2026-05-18T00:52:16.184375900"
+        "amount": 900.0,
+        "timestamp": "2026-05-18T01:41:42.456258800"
       }
     ],
-    "tuition": {
-      "history": [
-        {
-          "stage": "DOWNPAYMENT",
-          "amount": 198.4949999999999,
-          "timestamp": "2026-05-18T00:52:48.823028400"
-        }
-      ],
-      "fullTuition": 7218.0,
-      "discountedTuition": 793.9799999999996,
-      "discountRate": 89.0,
-      "isInitialized": true,
-      "amounts": {
-        "MIDTERM": 198.4949999999999,
-        "FINALS": 198.4949999999999,
-        "DOWNPAYMENT": 198.4949999999999,
-        "PRELIM": 198.4949999999999
-      },
-      "status": {
-        "MIDTERM": false,
-        "FINALS": false,
-        "DOWNPAYMENT": true,
-        "PRELIM": false
-      }
-    },
-    "username": "Irene",
-    "password": "123"
-  },
-  {
-    "budget": 9878709.0,
-    "expenses": [],
     "tuition": {
       "history": [],
       "fullTuition": 0.0,
@@ -49,13 +18,52 @@
       "isInitialized": false,
       "amounts": {},
       "status": {
+        "DOWNPAYMENT": false,
         "MIDTERM": false,
         "FINALS": false,
-        "DOWNPAYMENT": false,
         "PRELIM": false
       }
     },
-    "username": "Yum",
-    "password": "456"
+    "username": "Irene",
+    "password": "0426"
+  },
+  {
+    "budget": 2.9783909E7,
+    "expenses": [
+      {
+        "category": "Food",
+        "month": 5,
+        "name": "Lunch",
+        "amount": 122.0,
+        "timestamp": "2026-05-18T01:48:34.225810500"
+      }
+    ],
+    "tuition": {
+      "history": [
+        {
+          "stage": "DOWNPAYMENT",
+          "amount": 23308.875,
+          "timestamp": "2026-05-18T01:48:48.103298100"
+        }
+      ],
+      "fullTuition": 124314.0,
+      "discountedTuition": 93235.5,
+      "discountRate": 25.0,
+      "isInitialized": true,
+      "amounts": {
+        "MIDTERM": 23308.875,
+        "FINALS": 23308.875,
+        "DOWNPAYMENT": 23308.875,
+        "PRELIM": 23308.875
+      },
+      "status": {
+        "MIDTERM": false,
+        "FINALS": false,
+        "DOWNPAYMENT": true,
+        "PRELIM": false
+      }
+    },
+    "username": "Anne",
+    "password": "1117"
   }
 ]

@@ -52,24 +52,87 @@ public class Server {
      * @param file destination file
      * @param data transaction JSON
      */
+    /**
+     * Saves received transaction data into
+     * the user's dedicated server log file.
+     *
+     * Stored as a JSON array.
+     *
+     * @param file destination file
+     * @param data transaction JSON
+     */
     private void save(String file, String data) {
 
         try {
+
             File folder = new File(LOG_FOLDER);
 
             if (!folder.exists()) {
+
                 folder.mkdirs();
             }
 
-            BufferedWriter bw = new BufferedWriter(
-                    new FileWriter(file, true));
+            File logFile = new File(file);
 
+
+            if (!logFile.exists()
+                    || logFile.length() == 0) {
+
+                BufferedWriter bw = new BufferedWriter(
+                        new FileWriter(logFile));
+
+                bw.write("[\n");
+                bw.write(data);
+                bw.write("\n]");
+
+                bw.close();
+
+                System.out.println(
+                        "[SAVED TO SERVER LOG]");
+
+                return;
+            }
+
+            BufferedReader br = new BufferedReader(
+                    new FileReader(logFile));
+
+            StringBuilder sb = new StringBuilder();
+
+            String line;
+
+            while ((line = br.readLine()) != null) {
+
+                sb.append(line).append("\n");
+            }
+
+            br.close();
+
+            String content = sb.toString().trim();
+
+
+            content = content.substring(
+                    0,
+                    content.length() - 1);
+
+
+            BufferedWriter bw = new BufferedWriter(
+                    new FileWriter(logFile));
+
+            bw.write(content);
+
+            if (!content.endsWith("[")) {
+
+                bw.write(",");
+            }
+
+            bw.write("\n");
             bw.write(data);
-            bw.newLine();
+            bw.write("\n]");
 
             bw.close();
 
-            System.out.println("[SAVED TO SERVER LOG]");
+            System.out.println(
+                    "[SAVED TO SERVER LOG]");
 
         } catch (Exception e) {
 

@@ -34,7 +34,6 @@ public class MainApp {
 
         int authChoice;
 
-
         System.out.println("\n==================================================");
         System.out.println("          ACCOUNT AUTHENTICATION");
         System.out.println("==================================================");
@@ -102,7 +101,6 @@ public class MainApp {
                     System.out.println("\n✅ Account successfully created.");
                 }
 
-
                 case 0 -> {
 
                     System.out.println("\n==================================================");
@@ -117,7 +115,6 @@ public class MainApp {
             }
         }
 
-
         FinanceService finance = new FinanceService();
 
         finance.setBudgetDirect(currentUser.budget);
@@ -130,15 +127,12 @@ public class MainApp {
 
         Client client = new Client();
 
-      
-
         AutoSaveThread autoSave = new AutoSaveThread(
                 accountService,
                 finance,
                 currentUser);
 
         autoSave.start();
-
 
         int choice = 0;
 
@@ -181,7 +175,6 @@ public class MainApp {
 
             switch (choice) {
 
-
                 case 1 -> finance.setBudget(sc);
 
                 case 2 -> {
@@ -206,18 +199,20 @@ public class MainApp {
 
                 case 6 -> {
 
-                    finance.payTuition(sc);
+                    boolean success = finance.payTuition(sc);
 
-                    String data = finance.exportTuition(
-                            currentUser.getUsername());
+                    if (success) {
 
-                    client.send(data);
+                        String data = finance.exportTuition(
+                                currentUser.getUsername());
 
-                    System.out.println("\n==================================================");
-                    System.out.println("           TUITION UPLOADED");
-                    System.out.println("==================================================");
+                        client.send(data);
+
+                        System.out.println("\n==================================================");
+                        System.out.println("           TUITION UPLOADED");
+                        System.out.println("==================================================");
+                    }
                 }
-        
 
                 case 7 -> finance.viewTuition();
 

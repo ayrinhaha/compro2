@@ -1,0 +1,17 @@
+[
+    {
+        "type": "EXPENSE",
+        "username": "Anne",
+        "name": "Lunch",
+        "amount": 122.0,
+        "category": "Food",
+        "timestamp": "2026-05-18T01:48:34.225810500"
+    },
+    {
+        "type": "TUITION",
+        "username": "Anne",
+        "stage": "DOWNPAYMENT",
+        "amount": 23308.875,
+        "timestamp": "2026-05-18T01:48:48.103298100"
+    }
+]

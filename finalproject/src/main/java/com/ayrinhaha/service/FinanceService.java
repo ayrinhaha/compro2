@@ -191,8 +191,8 @@ public class FinanceService {
      *
      * @param sc Scanner input
      */
-    public void payTuition(Scanner sc) {
-        tuition.payTuition(sc);
+    public boolean payTuition(Scanner sc) {
+        return tuition.payTuition(sc);
     }
 
     /**
