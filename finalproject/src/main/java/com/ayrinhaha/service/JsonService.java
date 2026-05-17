@@ -1,69 +1,39 @@
-// ==========================================
-// JsonService.java
-// ==========================================
-
 package com.ayrinhaha.service;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
+/**
+ * Handles reading transaction logs
+ * from the server log directory.
+ *
+ * @author ayrinhaha
+ */
 public class JsonService {
 
-    private final String FILE = "server_data.json";
+    /**
+     * Loads and prints the server logs
+     * of a specific user account.
+     *
+     * @param username account owner
+     */
+    public void loadServerLogs(String username) {
 
-    // ==============================
-    // SAVE
-    // ==============================
-
-    public void save(String data) {
-
-        try (BufferedWriter writer = new BufferedWriter(
-                new FileWriter(FILE))) {
-
-            writer.write(data);
-
-            // System.out.println(
-            // "\n[JSON FILE SAVED]");
-
-        } catch (IOException e) {
-
-            System.out.println(
-                    "Error writing JSON file.");
-        }
-    }
-
-    // ==============================
-    // LOAD
-    // ==============================
-
-    public void loadExpenses() {
+        String file = "server_logs/" + username + "_logs.json";
 
         try (BufferedReader br = new BufferedReader(
-                new FileReader("server_data.json"))) {
+                new FileReader(file))) {
 
             String line;
 
             while ((line = br.readLine()) != null) {
+
                 System.out.println(line);
             }
 
         } catch (Exception e) {
-            System.out.println("No expense data found.");
-        }
-    }
 
-    public void loadTuition() {
-
-        try (BufferedReader br = new BufferedReader(
-                new FileReader("tuition_server.json"))) {
-
-            String line;
-
-            while ((line = br.readLine()) != null) {
-                System.out.println(line);
-            }
-
-        } catch (Exception e) {
-            System.out.println("No tuition data found.");
+            System.out.println("No server logs found.");
         }
     }
 }

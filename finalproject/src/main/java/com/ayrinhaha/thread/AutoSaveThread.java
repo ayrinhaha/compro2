@@ -1,21 +1,46 @@
 package com.ayrinhaha.thread;
 
+import com.ayrinhaha.model.UserAccount;
+import com.ayrinhaha.service.AccountService;
 import com.ayrinhaha.service.FinanceService;
-import com.ayrinhaha.service.JsonService;
 
+/**
+ * Background autosave thread responsible for:
+ * - syncing finance state to user account
+ * - automatically saving accounts.json
+ *
+ * This thread runs continuously every 10 seconds.
+ *
+ * @author ayrinhaha
+ */
 public class AutoSaveThread extends Thread {
 
-    private JsonService jsonService;
-    private FinanceService financeService;
+    private final AccountService accountService;
 
+    private final FinanceService financeService;
+
+    private final UserAccount currentUser;
+
+    /**
+     * Constructs the autosave thread.
+     *
+     * @param accountService handles account persistence
+     * @param financeService runtime finance operations
+     * @param currentUser currently logged-in user
+     */
     public AutoSaveThread(
-            JsonService jsonService,
-            FinanceService financeService) {
+            AccountService accountService,
+            FinanceService financeService,
+            UserAccount currentUser) {
 
-        this.jsonService = jsonService;
+        this.accountService = accountService;
         this.financeService = financeService;
+        this.currentUser = currentUser;
     }
 
+    /**
+     * Continuously autosaves account data every 10 seconds.
+     */
     @Override
     public void run() {
 
@@ -23,22 +48,25 @@ public class AutoSaveThread extends Thread {
 
             try {
 
-                // autosave every 10 seconds
                 Thread.sleep(10000);
 
-                // export finance data as JSON string
-                String data = financeService.exportData();
+                currentUser.budget =
+                        financeService.getBudget();
 
-                // save to finance.json
-                jsonService.save(data);
+                currentUser.expenses =
+                        financeService.getExpensesCopy();
 
-                //System.out.println(
-                        //"[AutoSave Completed]");
+                currentUser.tuition =
+                        financeService.getTuition();
+
+
+
+                accountService.sync(currentUser);
 
             } catch (InterruptedException e) {
 
                 System.out.println(
-                        "[Thread Interrupted]");
+                        "\n[AUTOSAVE THREAD INTERRUPTED]");
 
                 break;
             }

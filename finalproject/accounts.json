@@ -1,0 +1,61 @@
+[
+  {
+    "budget": 7787.0,
+    "expenses": [
+      {
+        "category": "Misc",
+        "month": 5,
+        "name": "Shopee",
+        "amount": 213.0,
+        "timestamp": "2026-05-18T00:52:16.184375900"
+      }
+    ],
+    "tuition": {
+      "history": [
+        {
+          "stage": "DOWNPAYMENT",
+          "amount": 198.4949999999999,
+          "timestamp": "2026-05-18T00:52:48.823028400"
+        }
+      ],
+      "fullTuition": 7218.0,
+      "discountedTuition": 793.9799999999996,
+      "discountRate": 89.0,
+      "isInitialized": true,
+      "amounts": {
+        "MIDTERM": 198.4949999999999,
+        "FINALS": 198.4949999999999,
+        "DOWNPAYMENT": 198.4949999999999,
+        "PRELIM": 198.4949999999999
+      },
+      "status": {
+        "MIDTERM": false,
+        "FINALS": false,
+        "DOWNPAYMENT": true,
+        "PRELIM": false
+      }
+    },
+    "username": "Irene",
+    "password": "123"
+  },
+  {
+    "budget": 9878709.0,
+    "expenses": [],
+    "tuition": {
+      "history": [],
+      "fullTuition": 0.0,
+      "discountedTuition": 0.0,
+      "discountRate": 0.0,
+      "isInitialized": false,
+      "amounts": {},
+      "status": {
+        "MIDTERM": false,
+        "FINALS": false,
+        "DOWNPAYMENT": false,
+        "PRELIM": false
+      }
+    },
+    "username": "Yum",
+    "password": "456"
+  }
+]

@@ -2,6 +2,12 @@ package com.ayrinhaha.model;
 
 import java.util.*;
 
+/**
+ * Handles tuition setup, payment processing, status tracking,
+ * and payment history management.
+ *
+ * @author ayrinhaha
+ */
 public class Tuition {
 
         private List<TuitionPayment> history = new ArrayList<>();
@@ -16,33 +22,65 @@ public class Tuition {
         private double fullTuition;
         private double discountedTuition;
         private double discountRate;
-
         private boolean isInitialized = false;
 
         private Map<Stage, Double> amounts = new HashMap<>();
         private Map<Stage, Boolean> status = new HashMap<>();
 
-        // =========================
-        // CONSTRUCTOR
-        // =========================
-
+        /**
+         * Initializes the tuition system with default unpaid statuses.
+         */
         public Tuition() {
                 for (Stage s : Stage.values()) {
                         status.put(s, false);
                 }
         }
 
-        // =========================
-        // SETUP TUITION
-        // =========================
-
+        /**
+         * Interactively sets up the tuition breakdown from user input.
+         *
+         * @param sc Scanner for user input.
+         */
         public void setupTuition(Scanner sc) {
+                System.out.println("\n==================================================");
+                System.out.println("              TUITION SETUP");
+                System.out.println("==================================================");
 
-                System.out.print("\nEnter full tuition: ₱");
-                fullTuition = sc.nextDouble();
+                try {
 
-                System.out.print("Scholarship discount % (0 if none): ");
-                discountRate = sc.nextDouble();
+                        System.out.print("Enter full tuition: ");
+                        fullTuition = sc.nextDouble();
+
+                        if (fullTuition <= 0) {
+
+                                System.out.println("Invalid tuition amount.");
+                                return;
+                        }
+
+                } catch (Exception e) {
+
+                        System.out.println("Invalid tuition input.");
+                        sc.nextLine();
+                        return;
+                }
+
+                try {
+
+                        System.out.print("Scholarship discount %: ");
+                        discountRate = sc.nextDouble();
+
+                        if (discountRate < 0 || discountRate > 100) {
+
+                                System.out.println("Discount must be between 0-100.");
+                                return;
+                        }
+
+                } catch (Exception e) {
+
+                        System.out.println("Invalid discount input.");
+                        sc.nextLine();
+                        return;
+                }
 
                 double discount = fullTuition * (discountRate / 100);
                 discountedTuition = fullTuition - discount;
@@ -55,114 +93,126 @@ public class Tuition {
 
                 isInitialized = true;
 
-                System.out.println("\n=== TUITION BREAKDOWN ===");
-                System.out.println("Original: " + fullTuition);
-                System.out.println("Discounted: " + discountedTuition);
-                System.out.println("Per Stage: " + perStage);
+                System.out.println("\nBREAKDOWN");
+                System.out.println("Original   : " + fullTuition);
+                System.out.println("Discounted : " + discountedTuition);
+                System.out.println("Per Stage  : " + perStage);
+                System.out.println("==================================================\n");
         }
 
-        // =========================
-        // PAY TUITION
-        // =========================
-
+        /**
+         * Processes a tuition payment interactively.
+         *
+         * @param sc Scanner for user input.
+         */
         public void payTuition(Scanner sc) {
-
-                // VALIDATION
                 if (!isInitialized) {
-                        System.out.println(
-                                        "❌ You need to setup tuition first.");
+                        System.out.println("Please setup tuition first.");
                         return;
                 }
 
-                System.out.println("\n=== PAYMENT STAGES ===");
+                System.out.println("\n==================================================");
+                System.out.println("            TUITION PAYMENT");
+                System.out.println("==================================================");
 
                 int i = 1;
                 for (Stage s : Stage.values()) {
-                        System.out.println(i + ". " + s + " - ₱" + amounts.get(s));
+                        System.out.println(i + ". " + s + " - " + amounts.get(s));
                         i++;
                 }
 
-                System.out.print("\nSelect stage: ");
-                int choice = sc.nextInt();
+                int choice;
 
-                Stage selected = Stage.values()[choice - 1];
+                try {
 
-                // =========================
-                // ALREADY PAID CHECK
-                // =========================
+                        System.out.print("\nSelect stage: ");
+                        choice = sc.nextInt();
 
-                if (status.get(selected)) {
-                        System.out.println(
-                                        "❌ " + selected + " already PAID!");
+                        if (choice < 1 || choice > Stage.values().length) {
+
+                                System.out.println("Invalid stage.");
+                                return;
+                        }
+
+                } catch (Exception e) {
+
+                        System.out.println("Invalid input.");
+                        sc.nextLine();
                         return;
                 }
 
-                double amount = amounts.get(selected);
+                Stage selected = Stage.values()[choice - 1];
 
-                System.out.println("You will pay: ₱" + amount);
+                if (status.get(selected)) {
+                        System.out.println("Already PAID: " + selected);
+                        return;
+                }
 
-                System.out.print("Confirm? (1-Yes | 2-No): ");
-                int confirm = sc.nextInt();
+                System.out.println("Amount: " + amounts.get(selected));
+                System.out.print("Confirm?\n1. Yes\n2. No\nChoice: ");
+                int confirm;
+
+                try {
+
+                        confirm = sc.nextInt();
+
+                } catch (Exception e) {
+
+                        System.out.println("Invalid input.");
+                        sc.nextLine();
+                        return;
+                }
 
                 if (confirm == 1) {
-
                         status.put(selected, true);
-
-                        TuitionPayment payment = new TuitionPayment(selected, amount);
-
+                        TuitionPayment payment = new TuitionPayment(selected, amounts.get(selected));
                         history.add(payment);
-
                         System.out.println(selected + " PAID!");
-                        System.out.println("Logged successfully!");
-                        System.out.println("[TUITION SENT TO SERVER]");
                 } else {
-                        System.out.println("Cancelled payment.");
+                        System.out.println("Cancelled");
                 }
 
                 viewStatus();
         }
 
-        // =========================
-        // VIEW STATUS
-        // =========================
-
+        /**
+         * Displays the current paid/unpaid status for all academic stages.
+         */
         public void viewStatus() {
-
-                System.out.println("\n=== TUITION STATUS ===");
+                System.out.println("\n==================================================");
+                System.out.println("            TUITION STATUS");
+                System.out.println("==================================================");
 
                 for (Stage s : Stage.values()) {
-                        System.out.println(s + " : " +
-                                        (status.get(s) ? "PAID" : "UNPAID"));
+                        System.out.println(s + " : " + (status.get(s) ? "PAID" : "UNPAID"));
                 }
 
-                System.out.println("\nRemaining Balance: ₱" + getRemainingBalance());
+                System.out.println("\nRemaining: " + getRemainingBalance());
+                System.out.println("==================================================\n");
         }
 
-        // =========================
-        // REMAINING BALANCE
-        // =========================
-
+        /**
+         * Calculates the remaining unpaid balance.
+         *
+         * @return The total remaining balance.
+         */
         public double getRemainingBalance() {
-
                 double paid = 0;
-
                 for (Stage s : Stage.values()) {
-
                         if (status.get(s)) {
                                 paid += amounts.get(s);
                         }
                 }
-
                 return discountedTuition - paid;
         }
 
-        // =========================
-        // PAYMENT HISTORY
-        // =========================
-
+        /**
+         * Displays the history of all processed tuition payments.
+         */
         public void viewPaymentHistory() {
-
-                System.out.println("\n=== TUITION PAYMENT HISTORY ===");
+                System.out.println("\n==================================================");
+                System.out.println("           PAYMENT HISTORY");
+                System.out.println("==================================================");
 
                 if (history.isEmpty()) {
                         System.out.println("No payments yet.");
@@ -172,64 +222,75 @@ public class Tuition {
                 for (TuitionPayment p : history) {
                         System.out.println(p);
                 }
+
+                System.out.println("==================================================\n");
         }
 
-        // =========================
-        // EXPORT TUITION DATA
-        // =========================
-
+        /**
+         * Exports base tuition data as a JSON string.
+         *
+         * @return Formatted JSON string.
+         */
         public String exportTuitionData() {
-
                 StringBuilder sb = new StringBuilder();
-
-                sb.append("{")
-                                .append("\"type\":\"TUITION\",")
-
-                                .append("\"fullTuition\":")
-                                .append(fullTuition).append(",")
-
-                                .append("\"discountedTuition\":")
-                                .append(discountedTuition).append(",")
-
-                                .append("\"remaining\":")
-                                .append(getRemainingBalance()).append(",")
-
-                                .append("\"status\":{");
-
-                for (Stage s : Stage.values()) {
-                        sb.append("\"")
-                                        .append(s)
-                                        .append("\":")
-                                        .append(status.get(s))
-                                        .append(",");
-                }
-
-                sb.append("}}");
-
+                sb.append("{\"type\":\"TUITION\",")
+                                .append("\"fullTuition\":").append(fullTuition).append(",")
+                                .append("\"discountedTuition\":").append(discountedTuition).append(",")
+                                .append("\"remaining\":").append(getRemainingBalance())
+                                .append("}");
                 return sb.toString();
         }
 
-        // =========================
-        // HISTORY EXPORT
-        // =========================
+        /**
+         * Exports the latest tuition payment as JSON.
+         *
+         * @return JSON string of latest tuition payment.
+         */
+        /**
+         * Exports latest tuition payment.
+         *
+         * @param username account owner
+         * @return tuition payment JSON
+         */
+        public String exportLatestPayment(String username) {
 
-        public String exportPaymentHistory() {
-
-                StringBuilder sb = new StringBuilder();
-
-                sb.append("{\"type\":\"TUITION_HISTORY\",\"payments\":[");
-
-                for (TuitionPayment p : history) {
-
-                        sb.append("{")
-                                        .append("\"stage\":\"").append(p.getStage()).append("\",")
-                                        .append("\"amount\":").append(p.getAmount()).append(",")
-                                        .append("\"timestamp\":\"").append(p.getTimestamp()).append("\"")
-                                        .append("},");
+                if (history.isEmpty()) {
+                        return "{}";
                 }
 
-                sb.append("]}");
+                TuitionPayment latest = history.get(history.size() - 1);
 
-                return sb.toString();
+                return "{"
+                                + "\"type\":\"TUITION\","
+                                + "\"username\":\"" + username + "\","
+                                + "\"stage\":\"" + latest.getStage() + "\","
+                                + "\"amount\":" + latest.getAmount() + ","
+                                + "\"timestamp\":\"" + latest.getTimestamp() + "\""
+                                + "}";
+        }
+
+
+        public void setInitialized(boolean initialized) {
+                this.isInitialized = initialized;
+        }
+
+        public void setStageAmount(Stage stage, double amount) {
+                this.amounts.put(stage, amount);
+        }
+
+        public void markStagePaid(Stage stage) {
+                this.status.put(stage, true);
+        }
+
+        public void addRestoredPayment(TuitionPayment payment) {
+                this.history.add(payment);
+        }
+
+        public List<TuitionPayment> getHistory() {
+                return this.history;
+        }
+
+        public Map<Stage, Double> getAmounts() {
+                return this.amounts;
         }
 }

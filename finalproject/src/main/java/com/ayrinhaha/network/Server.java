@@ -1,91 +1,107 @@
 package com.ayrinhaha.network;
 
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 
 public class Server {
 
-    private static final String EXPENSE_FILE =
-            "server_data.json";
-
-    private static final String TUITION_FILE =
-            "tuition_server.json";
+    private static final String LOG_FOLDER = "server_logs";
 
     public void startServer() {
 
-        try (ServerSocket server =
-                     new ServerSocket(5000)) {
+        try (ServerSocket server = new ServerSocket(5000)) {
 
             System.out.println("[SERVER STARTED]");
 
             while (true) {
 
-                Socket socket =
-                        server.accept();
+                Socket socket = server.accept();
 
-                BufferedReader reader =
-                        new BufferedReader(
-                                new InputStreamReader(
-                                        socket.getInputStream()));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-                StringBuilder data =
-                        new StringBuilder();
-
+                StringBuilder data = new StringBuilder();
                 String line;
 
                 while ((line = reader.readLine()) != null) {
-                    data.append(line).append("\n");
+                    data.append(line);
                 }
 
-                String payload =
-                        data.toString();
+                String payload = data.toString();
 
                 System.out.println("\n[RECEIVED]");
                 System.out.println(payload);
 
-                // =========================
-                // ROUTING LOGIC
-                // =========================
+                String username = extractUsername(payload);
 
-                if (payload.contains("\"type\":\"TUITION\"")) {
+                String file = LOG_FOLDER + "/" + username + "_logs.json";
 
-                    saveToFile(TUITION_FILE, payload);
-
-                } else {
-
-                    saveToFile(EXPENSE_FILE, payload);
-                }
+                save(file, payload);
 
                 socket.close();
             }
 
         } catch (Exception e) {
-            System.out.println("Server error.");
+            System.out.println("Server error");
         }
     }
 
-    private void saveToFile(String file,
-                            String data) {
+    /**
+     * Saves received transaction data into
+     * the user's dedicated server log file.
+     *
+     * @param file destination file
+     * @param data transaction JSON
+     */
+    private void save(String file, String data) {
 
-        try (BufferedWriter writer =
-                     new BufferedWriter(
-                             new FileWriter(file, true))) {
+        try {
+            File folder = new File(LOG_FOLDER);
 
-            writer.write(data);
-            writer.newLine();
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
 
-            System.out.println(
-                    "[SAVED TO " + file + "]");
+            BufferedWriter bw = new BufferedWriter(
+                    new FileWriter(file, true));
 
-        } catch (IOException e) {
+            bw.write(data);
+            bw.newLine();
 
-            System.out.println("File error.");
+            bw.close();
+
+            System.out.println("[SAVED TO SERVER LOG]");
+
+        } catch (Exception e) {
+
+            System.out.println("Save error");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Extracts username from incoming JSON payload.
+     *
+     * @param json incoming transaction JSON
+     * @return extracted username
+     */
+    private String extractUsername(String json) {
+
+        try {
+
+            int start = json.indexOf("\"username\":\"")
+                    + 12;
+
+            int end = json.indexOf("\"", start);
+
+            return json.substring(start, end);
+
+        } catch (Exception e) {
+
+            return "unknown_user";
         }
     }
 
     public static void main(String[] args) {
-
         new Server().startServer();
     }
 }
