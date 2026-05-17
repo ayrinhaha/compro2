@@ -1,33 +1,5 @@
 [
   {
-    "budget": 7100.0,
-    "expenses": [
-      {
-        "category": "Misc",
-        "month": 5,
-        "name": "Shopee",
-        "amount": 900.0,
-        "timestamp": "2026-05-18T01:41:42.456258800"
-      }
-    ],
-    "tuition": {
-      "history": [],
-      "fullTuition": 0.0,
-      "discountedTuition": 0.0,
-      "discountRate": 0.0,
-      "isInitialized": false,
-      "amounts": {},
-      "status": {
-        "DOWNPAYMENT": false,
-        "MIDTERM": false,
-        "FINALS": false,
-        "PRELIM": false
-      }
-    },
-    "username": "Irene",
-    "password": "0426"
-  },
-  {
     "budget": 2.9783909E7,
     "expenses": [
       {
