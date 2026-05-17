@@ -1,43 +1,69 @@
+// ==========================================
+// JsonService.java
+// ==========================================
+
 package com.ayrinhaha.service;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 
 public class JsonService {
 
-    private String filePath = "finance_data.json";
+    private final String FILE = "server_data.json";
 
-    public void save(Object data) {
+    // ==============================
+    // SAVE
+    // ==============================
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+    public void save(String data) {
 
-            writer.write(data.toString());
+        try (BufferedWriter writer = new BufferedWriter(
+                new FileWriter(FILE))) {
 
-            //System.out.println("\n[DATA SAVED SUCCESSFULLY]");
+            writer.write(data);
 
-        } catch (Exception e) {
+            // System.out.println(
+            // "\n[JSON FILE SAVED]");
 
-            System.out.println("Error saving file.");
+        } catch (IOException e) {
+
+            System.out.println(
+                    "Error writing JSON file.");
         }
     }
 
-    public void load() {
+    // ==============================
+    // LOAD
+    // ==============================
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("finance_data.json"))) {
+    public void loadExpenses() {
+
+        try (BufferedReader br = new BufferedReader(
+                new FileReader("server_data.json"))) {
 
             String line;
 
-            System.out.println("\n=== FILE CONTENT ===");
-
-            while ((line = reader.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
                 System.out.println(line);
             }
 
         } catch (Exception e) {
-            System.out.println("Error reading file.");
+            System.out.println("No expense data found.");
         }
     }
 
+    public void loadTuition() {
+
+        try (BufferedReader br = new BufferedReader(
+                new FileReader("tuition_server.json"))) {
+
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+
+        } catch (Exception e) {
+            System.out.println("No tuition data found.");
+        }
+    }
 }

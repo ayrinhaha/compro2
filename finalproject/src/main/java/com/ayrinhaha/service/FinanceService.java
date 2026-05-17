@@ -1,8 +1,10 @@
 package com.ayrinhaha.service;
 
-import com.ayrinhaha.model.*;
+import com.ayrinhaha.model.Expense;
+import com.ayrinhaha.model.Tuition;
 import com.ayrinhaha.repo.Repository;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class FinanceService {
@@ -13,61 +15,77 @@ public class FinanceService {
     private double budget = 0;
 
     // ==============================
-    // SET BUDGET
+    // MONTH RESET
     // ==============================
-    public void setBudget(Scanner sc) {
 
-        System.out.print("\nEnter your monthly budget: ");
-        budget = sc.nextDouble();
+    private void checkMonthlyReset() {
 
-        System.out.println("Budget set successfully: ₱" + budget);
+        int currentMonth = LocalDate.now().getMonthValue();
+
+        expenses.getAll().removeIf(
+                e -> e.getMonth() != currentMonth);
     }
 
     // ==============================
-    // ADD EXPENSE
+    // BUDGET
     // ==============================
+
+    public void setBudget(Scanner sc) {
+
+        System.out.print("\nEnter budget: ₱");
+        budget = sc.nextDouble();
+
+        System.out.println("Budget set: ₱" + budget);
+    }
+
+    public void viewBudget() {
+
+        System.out.println(
+                "\nRemaining Budget: ₱" + budget);
+    }
+
+    // ==============================
+    // EXPENSE
+    // ==============================
+
     public void addExpense(Scanner sc) {
 
+        checkMonthlyReset();
+
         if (budget <= 0) {
-            System.out.println("\n Please set your budget first!");
+            System.out.println("Set budget first!");
             return;
         }
 
-        System.out.print("Enter expense name: ");
+        System.out.print("Name: ");
         String name = sc.next();
 
-        System.out.print("Enter amount: ");
+        System.out.print("Amount: ");
         double amount = sc.nextDouble();
 
-        System.out.print("Enter category: ");
+        System.out.print("Category: ");
         String category = sc.next();
 
-        if (amount > budget) {
-            System.out.println("\nNot enough budget!");
+        if (amount <= 0 || amount > budget) {
+            System.out.println("Invalid or insufficient budget!");
             return;
         }
 
-        Expense exp = new Expense(name, amount, category);
+        Expense e = new Expense(name, amount, category);
 
-        expenses.add(exp);
+        expenses.add(e);
 
         budget -= amount;
 
-        exp.process();
+        e.process();
 
-        System.out.println("\nExpense added successfully!");
-        System.out.println("Remaining budget: " + budget);
+        System.out.println(
+                "Remaining Budget: ₱" + budget);
     }
 
-    // ==============================
-    // VIEW EXPENSES
-    // ==============================
     public void viewExpenses() {
 
-        if (expenses.getAll().isEmpty()) {
-            System.out.println("\nNo expenses yet.");
-            return;
-        }
+        checkMonthlyReset();
 
         for (Expense e : expenses.getAll()) {
             System.out.println(e);
@@ -75,16 +93,9 @@ public class FinanceService {
     }
 
     // ==============================
-    // VIEW BUDGET
+    // TUITION
     // ==============================
-    public void viewBudget() {
 
-        System.out.println("\nRemaining Budget: " + budget);
-    }
-
-    // ==============================
-    // TUITION METHODS
-    // ==============================
     public void setupTuition(Scanner sc) {
         tuition.setupTuition(sc);
     }
@@ -95,5 +106,40 @@ public class FinanceService {
 
     public void viewTuition() {
         tuition.viewStatus();
+    }
+
+    public String exportTuition() {
+        return tuition.exportTuitionData();
+    }
+
+    public void viewTuitionHistory() {
+        tuition.viewPaymentHistory();
+    }
+
+    // ==============================
+    // EXPORT DATA (FOR SERVER ONLY)
+    // ==============================
+
+    public String exportData() {
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("{")
+                .append("\"type\":\"EXPENSE\",")
+                .append("\"budget\":").append(budget).append(",")
+                .append("\"expenses\":[");
+
+        for (Expense e : expenses.getAll()) {
+
+            sb.append("{")
+                    .append("\"name\":\"").append(e.getName()).append("\",")
+                    .append("\"amount\":").append(e.getAmount()).append(",")
+                    .append("\"category\":\"").append(e.getCategory()).append("\"")
+                    .append("}");
+        }
+
+        sb.append("]}");
+
+        return sb.toString();
     }
 }

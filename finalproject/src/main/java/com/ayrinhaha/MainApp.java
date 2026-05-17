@@ -13,8 +13,14 @@ public class MainApp {
         Scanner sc = new Scanner(System.in);
 
         FinanceService finance = new FinanceService();
+
         JsonService json = new JsonService();
+
         Client client = new Client();
+
+        // ==============================
+        // MULTITHREADING
+        // ==============================
 
         AutoSaveThread thread = new AutoSaveThread(json, finance);
 
@@ -32,9 +38,9 @@ public class MainApp {
             System.out.println("5. Setup Tuition");
             System.out.println("6. Pay Tuition");
             System.out.println("7. View Tuition");
-            System.out.println("8. Save");
-            System.out.println("9. Send to Server");
-            System.out.println("10. Exit");
+            System.out.println("8. View Server Data");
+            System.out.println("9. View Tuition Payment History");
+            System.out.println("0. Exit");
 
             System.out.print("\nEnter choice: ");
             choice = sc.nextInt();
@@ -51,20 +57,46 @@ public class MainApp {
 
                 case 5 -> finance.setupTuition(sc);
 
-                case 6 -> finance.payTuition(sc);
+                case 6 -> {
+
+                    finance.payTuition(sc);
+
+                    String data = finance.exportTuition();
+
+                    client.send(data);
+
+                    System.out.println(
+                            "[TUITION SENT]");
+                }
 
                 case 7 -> finance.viewTuition();
 
-                case 8 -> json.save(finance);
+                // ==============================
+                // SAVE + SEND
+                // ==============================
 
-                case 9 -> client.send("Finance data sent");
+                case 8 -> {
 
-                case 10 -> System.out.println("System closed.");
+                    System.out.println("\n=== EXPENSES (SERVER) ===");
+                    json.loadExpenses(); // reads server_data.json
 
-                default -> System.out.println("Invalid choice.");
+                    System.out.println("\n=== TUITION (SERVER) ===");
+                    json.loadTuition(); // reads tuition_server.json
+                }
+
+
+                case 9 -> finance.viewTuitionHistory();
+
+                case 0 ->
+                    System.out.println(
+                            "System closed.");
+
+                default ->
+                    System.out.println(
+                            "Invalid choice.");
             }
 
-        } while (choice != 10);
+        } while (choice != 0);
 
         sc.close();
     }
