@@ -73,11 +73,11 @@ public class TuitionPayment {
     public String toString() {
 
         return "\n--------------------------------------------------"
-                + "\nTUITION PAYMENT"
+                + "\n               TUITION PAYMENT"
                 + "\n--------------------------------------------------"
-                + "\nStage      : " + stage
-                + "\nAmount     : " + amount
-                + "\nTimestamp  : " + timestamp
+                + String.format("\n%-12s: %s", "Stage", stage)
+                + String.format("\n%-12s: %.2f", "Amount", amount)
+                + String.format("\n%-12s: %s", "Timestamp", timestamp)
                 + "\n--------------------------------------------------";
     }
 }

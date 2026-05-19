@@ -36,7 +36,7 @@ public class FinanceService {
     private void header(String title) {
 
         System.out.println("\n==================================================");
-        System.out.println(" " + title);
+        System.out.printf("%30s%n", title);
         System.out.println("==================================================");
     }
 
@@ -60,25 +60,30 @@ public class FinanceService {
 
         header("BUDGET SETUP");
 
-        try {
+        while (true) {
 
-            System.out.print("Enter budget: ");
-            budget = sc.nextDouble();
+            try {
 
-            if (budget < 0) {
+                System.out.print("Enter budget: ");
 
-                System.out.println("Budget cannot be negative.");
-                return;
+                budget = Double.parseDouble(sc.nextLine());
+
+                if (budget <= 0) {
+
+                    System.out.println("[ERROR] Budget must be greater than 0.");
+                    continue;
+                }
+
+                break;
+
+            } catch (NumberFormatException e) {
+
+                System.out.println("[ERROR] Invalid budget input.");
             }
-
-        } catch (Exception e) {
-
-            System.out.println("Invalid budget input.");
-            sc.nextLine();
-            return;
         }
-        System.out.println("\nExpense budget successfully set.");
-        System.out.println("Current Budget : " + budget);
+
+        System.out.println("\n[SUCCESS] Expense budget successfully set.");
+        System.out.printf("Current Budget : %.2f%n", budget);
     }
 
     /**
@@ -88,7 +93,9 @@ public class FinanceService {
 
         header("BUDGET STATUS");
 
-        System.out.println("Remaining Expense Budget : " + budget);
+        System.out.printf("Remaining Expense Budget : %.2f%n", budget);
+
+        System.out.println("==================================================");
     }
 
     /**
@@ -96,7 +103,7 @@ public class FinanceService {
      *
      * @param sc Scanner input
      */
-    public void addExpense(Scanner sc) {
+    public boolean addExpense(Scanner sc) {
 
         header("ADD EXPENSE");
 
@@ -104,49 +111,72 @@ public class FinanceService {
 
         if (budget <= 0) {
 
-            System.out.println("Please set your expense budget first.");
-            return;
+            System.out.println("[ERROR] Please set your expense budget first.");
+            return false;
         }
 
-        System.out.print("Expense Name     : ");
-        String name = sc.next();
+        String name;
+
+        while (true) {
+
+            System.out.print("Expense Name     : ");
+
+            name = sc.nextLine().trim();
+
+            if (!name.isEmpty()) {
+                break;
+            }
+
+            System.out.println("[ERROR] Expense name cannot be empty.");
+        }
 
         double amount;
 
-        try {
+        while (true) {
 
-            System.out.print("Amount: ");
-            amount = sc.nextDouble();
+            try {
 
-            if (amount <= 0) {
+                System.out.print("Amount           : ");
 
-                System.out.println("Amount must be positive.");
-                return;
+                amount = Double.parseDouble(sc.nextLine());
+
+                if (amount <= 0) {
+
+                    System.out.println("[ERROR] Amount must be greater than 0.");
+                    continue;
+                }
+
+                if (amount > budget) {
+
+                    System.out.println("[ERROR] Insufficient expense budget.");
+                    return false;
+                }
+
+                break;
+
+            } catch (NumberFormatException e) {
+
+                System.out.println("[ERROR] Invalid amount input.");
+            }
+        }
+
+        String category;
+
+        while (true) {
+            System.out.print("Expense Category : ");
+            category = sc.nextLine().trim();
+
+            if (!category.isEmpty()) {
+                break;
             }
 
-        } catch (Exception e) {
-
-            System.out.println("Invalid amount input.");
-            sc.nextLine();
-            return;
+            System.out.println("[ERROR] Category cannot be empty.");
         }
 
-        System.out.print("Expense Category : ");
-        String category = sc.next();
-
-        if (amount <= 0) {
-
-            System.out.println("Expense amount must be greater than zero.");
-            return;
-        }
-
-        if (amount > budget) {
-
-            System.out.println("Insufficient expense budget.");
-            return;
-        }
-
-        Expense expense = new Expense(name, amount, category);
+        Expense expense = new Expense(
+                name,
+                amount,
+                category);
 
         expenses.add(expense);
 
@@ -154,7 +184,11 @@ public class FinanceService {
 
         expense.process();
 
-        System.out.println("Remaining Budget : " + budget);
+        System.out.printf("Remaining Budget : %.2f%n", budget);
+
+        System.out.println("[SUCCESS] Budget updated successfully.");
+
+        return true;
     }
 
     /**
@@ -168,13 +202,20 @@ public class FinanceService {
 
         if (expenses.getAll().isEmpty()) {
 
-            System.out.println("No expense records found.");
+            System.out.println("[ERROR] No expense records found.");
+            System.out.println("==================================================");
             return;
         }
 
+        int count = 1;
+
         for (Expense e : expenses.getAll()) {
+
+            System.out.println("\nExpense #" + count++);
             System.out.println(e);
         }
+
+        System.out.println("==================================================");
     }
 
     /**

@@ -37,5 +37,127 @@
     },
     "username": "Anne",
     "password": "1117"
+  },
+  {
+    "budget": 102574.0,
+    "expenses": [
+      {
+        "category": "Wants",
+        "month": 5,
+        "name": "Phone",
+        "amount": 15000.0,
+        "timestamp": "2026-05-19T20:56:18.432772800"
+      },
+      {
+        "category": "Misc2",
+        "month": 5,
+        "name": "Phone case",
+        "amount": 99.0,
+        "timestamp": "2026-05-19T21:50:00.495952100"
+      }
+    ],
+    "tuition": {
+      "history": [
+        {
+          "stage": "DOWNPAYMENT",
+          "amount": 24197.25,
+          "timestamp": "2026-05-19T20:56:44.425840500"
+        },
+        {
+          "stage": "PRELIM",
+          "amount": 24197.25,
+          "timestamp": "2026-05-19T20:56:51.719699800"
+        },
+        {
+          "stage": "MIDTERM",
+          "amount": 24197.25,
+          "timestamp": "2026-05-19T20:57:02.344009600"
+        },
+        {
+          "stage": "FINALS",
+          "amount": 24197.25,
+          "timestamp": "2026-05-19T20:57:32.145269900"
+        }
+      ],
+      "fullTuition": 967890.0,
+      "discountedTuition": 96789.0,
+      "discountRate": 90.0,
+      "isInitialized": true,
+      "amounts": {
+        "MIDTERM": 24197.25,
+        "FINALS": 24197.25,
+        "DOWNPAYMENT": 24197.25,
+        "PRELIM": 24197.25
+      },
+      "status": {
+        "MIDTERM": true,
+        "FINALS": true,
+        "DOWNPAYMENT": true,
+        "PRELIM": true
+      }
+    },
+    "username": "Irene",
+    "password": "123456789"
+  },
+  {
+    "budget": 16037.0,
+    "expenses": [
+      {
+        "category": "Food",
+        "month": 5,
+        "name": "Samgyup",
+        "amount": 199.0,
+        "timestamp": "2026-05-19T21:46:38.240807100"
+      },
+      {
+        "category": "Food",
+        "month": 5,
+        "name": "Jollibee",
+        "amount": 78.0,
+        "timestamp": "2026-05-19T21:47:19.009064800"
+      }
+    ],
+    "tuition": {
+      "history": [
+        {
+          "stage": "DOWNPAYMENT",
+          "amount": 200.0,
+          "timestamp": "2026-05-19T21:48:13.895537500"
+        },
+        {
+          "stage": "PRELIM",
+          "amount": 200.0,
+          "timestamp": "2026-05-19T21:48:19.960479"
+        },
+        {
+          "stage": "MIDTERM",
+          "amount": 200.0,
+          "timestamp": "2026-05-19T21:48:22.175423500"
+        },
+        {
+          "stage": "FINALS",
+          "amount": 200.0,
+          "timestamp": "2026-05-19T21:48:25.985545300"
+        }
+      ],
+      "fullTuition": 8000.0,
+      "discountedTuition": 800.0,
+      "discountRate": 90.0,
+      "isInitialized": true,
+      "amounts": {
+        "MIDTERM": 200.0,
+        "FINALS": 200.0,
+        "DOWNPAYMENT": 200.0,
+        "PRELIM": 200.0
+      },
+      "status": {
+        "MIDTERM": true,
+        "FINALS": true,
+        "DOWNPAYMENT": true,
+        "PRELIM": true
+      }
+    },
+    "username": "Jake Cyrus",
+    "password": "00"
   }
 ]

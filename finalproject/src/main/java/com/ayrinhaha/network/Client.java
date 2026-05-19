@@ -20,10 +20,10 @@ public class Client {
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
 
             out.println(data);
-            System.out.println("\n[DATA SENT TO SERVER]");
+            System.out.println("\n[SUCCESS] Data sent to server.");
 
         } catch (Exception e) {
-            System.out.println("Client connection error.");
+            System.out.println("[ERROR] Unable to connect to server.");
         }
     }
 }

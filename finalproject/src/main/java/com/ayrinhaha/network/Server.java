@@ -11,7 +11,7 @@ public class Server {
 
         try (ServerSocket server = new ServerSocket(5000)) {
 
-            System.out.println("[SERVER STARTED]");
+            System.out.println("[SUCCESS] Server started on port 5000.");
 
             while (true) {
 
@@ -28,7 +28,9 @@ public class Server {
 
                 String payload = data.toString();
 
-                System.out.println("\n[RECEIVED]");
+                System.out.println("\n==================================================");
+                System.out.println("              RECEIVED TRANSACTION");
+                System.out.println("==================================================");
                 System.out.println(payload);
 
                 String username = extractUsername(payload);
@@ -41,7 +43,7 @@ public class Server {
             }
 
         } catch (Exception e) {
-            System.out.println("Server error");
+            System.out.println("[ERROR] Server error.");
         }
     }
 
@@ -74,7 +76,6 @@ public class Server {
 
             File logFile = new File(file);
 
-
             if (!logFile.exists()
                     || logFile.length() == 0) {
 
@@ -87,15 +88,12 @@ public class Server {
 
                 bw.close();
 
-                System.out.println(
-                        "[SAVED TO SERVER LOG]");
+                System.out.println("[SUCCESS] Transaction saved to server log.");
 
                 return;
             }
 
-            BufferedReader br = new BufferedReader(
-                    new FileReader(logFile));
-
+            BufferedReader br = new BufferedReader(new FileReader(logFile));
             StringBuilder sb = new StringBuilder();
 
             String line;
@@ -109,15 +107,9 @@ public class Server {
 
             String content = sb.toString().trim();
 
+            content = content.substring(0, content.length() - 1);
 
-            content = content.substring(
-                    0,
-                    content.length() - 1);
-
-
-            BufferedWriter bw = new BufferedWriter(
-                    new FileWriter(logFile));
-
+            BufferedWriter bw = new BufferedWriter(new FileWriter(logFile));
             bw.write(content);
 
             if (!content.endsWith("[")) {
@@ -131,12 +123,10 @@ public class Server {
 
             bw.close();
 
-            System.out.println(
-                    "[SAVED TO SERVER LOG]");
+            System.out.println("[SUCCESS] Transaction saved to server log.");
 
         } catch (Exception e) {
-
-            System.out.println("Save error");
+            System.out.println("[ERROR] Failed to save transaction log.");
             e.printStackTrace();
         }
     }
@@ -150,16 +140,10 @@ public class Server {
     private String extractUsername(String json) {
 
         try {
-
-            int start = json.indexOf("\"username\":\"")
-                    + 12;
-
+            int start = json.indexOf("\"username\":\"") + 12;
             int end = json.indexOf("\"", start);
-
             return json.substring(start, end);
-
         } catch (Exception e) {
-
             return "unknown_user";
         }
     }

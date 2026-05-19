@@ -28,18 +28,14 @@ public class Tuition {
         private double discountRate;
 
         private boolean isInitialized = false;
-
         private Map<Stage, Double> amounts = new HashMap<>();
-
         private Map<Stage, Boolean> status = new HashMap<>();
 
         /**
          * Initializes tuition stages as unpaid.
          */
         public Tuition() {
-
                 for (Stage s : Stage.values()) {
-
                         status.put(s, false);
                 }
         }
@@ -53,9 +49,7 @@ public class Tuition {
 
                 if (isInitialized) {
 
-                        System.out.println(
-                                        "Tuition already initialized.");
-
+                        System.out.println("[ERROR] Tuition already initialized.");
                         return;
                 }
 
@@ -63,66 +57,49 @@ public class Tuition {
                 System.out.println("              TUITION SETUP");
                 System.out.println("==================================================");
 
-                // ==================================================
-                // FULL TUITION INPUT
-                // ==================================================
+                while (true) {
 
-                try {
+                        try {
 
-                        System.out.print("Enter full tuition: ");
-                        fullTuition = sc.nextDouble();
+                                System.out.print("Enter full tuition: ");
 
-                        if (fullTuition <= 0) {
+                                fullTuition = Double.parseDouble(sc.nextLine());
 
-                                System.out.println(
-                                                "Invalid tuition amount.");
+                                if (fullTuition <= 0) {
 
-                                return;
+                                        System.out.println("[ERROR] Invalid tuition amount.");
+                                        continue;
+                                }
+
+                                break;
+
+                        } catch (NumberFormatException e) {
+
+                                System.out.println("[ERROR] Invalid tuition input.");
                         }
-
-                } catch (Exception e) {
-
-                        System.out.println(
-                                        "Invalid tuition input.");
-
-                        sc.nextLine();
-
-                        return;
                 }
 
-                // ==================================================
-                // DISCOUNT INPUT
-                // ==================================================
+                while (true) {
 
-                try {
+                        try {
 
-                        System.out.print(
-                                        "Scholarship discount %: ");
+                                System.out.print("Scholarship discount %: ");
 
-                        discountRate = sc.nextDouble();
+                                discountRate = Double.parseDouble(sc.nextLine());
 
-                        if (discountRate < 0
-                                        || discountRate > 100) {
+                                if (discountRate < 0 || discountRate > 100) {
 
-                                System.out.println(
-                                                "Discount must be between 0-100.");
+                                        System.out.println("[ERROR] Discount must be between 0-100.");
+                                        continue;
+                                }
 
-                                return;
+                                break;
+
+                        } catch (NumberFormatException e) {
+
+                                System.out.println("[ERROR] Invalid discount input.");
                         }
-
-                } catch (Exception e) {
-
-                        System.out.println(
-                                        "Invalid discount input.");
-
-                        sc.nextLine();
-
-                        return;
                 }
-
-                // ==================================================
-                // COMPUTATION
-                // ==================================================
 
                 double discount = fullTuition * (discountRate / 100);
 
@@ -137,26 +114,16 @@ public class Tuition {
 
                 isInitialized = true;
 
-                // ==================================================
-                // DISPLAY BREAKDOWN
-                // ==================================================
+                System.out.println("\n==================================================");
+                System.out.println("                TUITION BREAKDOWN");
+                System.out.println("==================================================");
 
-                System.out.println("\nBREAKDOWN");
+                System.out.printf("%-15s: %.2f%n", "Original", fullTuition);
+                System.out.printf("%-15s: %.2f%n", "Discounted", discountedTuition);
+                System.out.printf("%-15s: %.2f%n", "Per Stage", perStage);
 
-                System.out.printf(
-                                "Original   : %.2f%n",
-                                fullTuition);
-
-                System.out.printf(
-                                "Discounted : %.2f%n",
-                                discountedTuition);
-
-                System.out.printf(
-                                "Per Stage  : %.2f%n",
-                                perStage);
-
-                System.out.println(
-                                "==================================================\n");
+                System.out.println("==================================================");
+                System.out.println("[SUCCESS] Tuition setup completed.\n");
         }
 
         /**
@@ -169,8 +136,7 @@ public class Tuition {
 
                 if (!isInitialized) {
 
-                        System.out.println(
-                                        "Please setup tuition first.");
+                        System.out.println("[ERROR] Please setup tuition first.");
 
                         return false;
                 }
@@ -184,7 +150,7 @@ public class Tuition {
                 for (Stage s : Stage.values()) {
 
                         System.out.printf(
-                                        "%d. %s - %.2f%n",
+                                        "%d. %-12s - %.2f%n",
                                         i,
                                         s,
                                         amounts.get(s));
@@ -192,81 +158,67 @@ public class Tuition {
                         i++;
                 }
 
-                // ==================================================
-                // STAGE SELECTION
-                // ==================================================
-
                 int choice;
 
-                try {
+                while (true) {
 
-                        System.out.print("\nSelect stage: ");
+                        try {
 
-                        choice = sc.nextInt();
+                                System.out.print("\nSelect stage: ");
 
-                        if (choice < 1
-                                        || choice > Stage.values().length) {
+                                choice = Integer.parseInt(sc.nextLine());
 
-                                System.out.println(
-                                                "Invalid stage.");
+                                if (choice < 1 || choice > Stage.values().length) {
 
-                                return false;
+                                        System.out.println("[ERROR] Invalid stage.");
+                                        continue;
+                                }
+
+                                break;
+
+                        } catch (NumberFormatException e) {
+                                System.out.println("[ERROR] Invalid input.");
                         }
-
-                } catch (Exception e) {
-
-                        System.out.println(
-                                        "Invalid input.");
-
-                        sc.nextLine();
-
-                        return false;
                 }
 
                 Stage selected = Stage.values()[choice - 1];
 
-                // ==================================================
-                // ALREADY PAID CHECK
-                // ==================================================
-
                 if (status.get(selected)) {
 
                         System.out.println(
-                                        "Already PAID: " + selected);
+                                        "[ERROR] Already PAID: " + selected);
 
                         return false;
                 }
 
-                // ==================================================
-                // CONFIRMATION
-                // ==================================================
+                System.out.printf("\nSelected Amount : %.2f%n", amounts.get(selected));
 
-                System.out.printf(
-                                "Amount: %.2f%n",
-                                amounts.get(selected));
-
-                System.out.print(
-                                "Confirm?\n1. Yes\n2. No\nChoice: ");
+                System.out.println("\nConfirm Payment?");
+                System.out.println("1. Yes");
+                System.out.println("2. No");
+                System.out.print("Enter choice: ");
 
                 int confirm;
 
-                try {
+                while (true) {
 
-                        confirm = sc.nextInt();
+                        try {
 
-                } catch (Exception e) {
+                                confirm = Integer.parseInt(sc.nextLine());
 
-                        System.out.println(
-                                        "Invalid input.");
+                                if (confirm != 1 && confirm != 2) {
 
-                        sc.nextLine();
+                                        System.out.println("Enter 1 or 2.");
+                                        continue;
+                                }
 
-                        return false;
+                                break;
+
+                        } catch (NumberFormatException e) {
+
+                                System.out.println("[ERROR] Invalid input.");
+                        }
                 }
-
-                // ==================================================
-                // PAYMENT PROCESSING
-                // ==================================================
 
                 if (confirm == 1) {
 
@@ -278,13 +230,11 @@ public class Tuition {
 
                         history.add(payment);
 
-                        System.out.println(
-                                        selected + " PAID!");
+                        System.out.println("\n[SUCCESS] " + selected + " payment completed.");
 
                         if (getRemainingBalance() == 0) {
 
-                                System.out.println(
-                                                "\n🎉 TUITION FULLY PAID");
+                                System.out.println("\n[SUCCESS] Tuition fully paid.");
                         }
 
                         viewStatus();
@@ -293,8 +243,7 @@ public class Tuition {
 
                 } else {
 
-                        System.out.println(
-                                        "Payment cancelled.");
+                        System.out.println("[INFO] Payment cancelled.");
 
                         return false;
                 }
@@ -306,24 +255,22 @@ public class Tuition {
         public void viewStatus() {
 
                 System.out.println("\n==================================================");
-                System.out.println("            TUITION STATUS");
+                System.out.println("                TUITION STATUS");
                 System.out.println("==================================================");
 
                 for (Stage s : Stage.values()) {
 
-                        System.out.println(
-                                        s + " : "
-                                                        + (status.get(s)
-                                                                        ? "PAID"
-                                                                        : "UNPAID"));
+                        System.out.printf(
+                                        "%-12s : %s%n",
+                                        s,
+                                        status.get(s) ? "PAID" : "UNPAID");
                 }
 
                 System.out.printf(
-                                "%nRemaining: %.2f%n",
+                                "\nRemaining Balance : %.2f%n",
                                 getRemainingBalance());
 
-                System.out.println(
-                                "==================================================\n");
+                System.out.println("==================================================\n");
         }
 
         /**
@@ -352,24 +299,25 @@ public class Tuition {
         public void viewPaymentHistory() {
 
                 System.out.println("\n==================================================");
-                System.out.println("           PAYMENT HISTORY");
+                System.out.println("               PAYMENT HISTORY");
                 System.out.println("==================================================");
 
                 if (history.isEmpty()) {
 
-                        System.out.println(
-                                        "No payments yet.");
-
+                        System.out.println("[ERROR] No payments found.");
+                        System.out.println("==================================================");
                         return;
                 }
 
+                int count = 1;
+
                 for (TuitionPayment p : history) {
 
+                        System.out.println("\nPayment #" + count++);
                         System.out.println(p);
                 }
 
-                System.out.println(
-                                "==================================================\n");
+                System.out.println("==================================================\n");
         }
 
         /**

@@ -34,15 +34,16 @@ public class Expense extends Transaction {
     public void process() {
 
         System.out.println("\n==================================================");
-        System.out.println("               EXPENSE PROCESSING");
+        System.out.println("              EXPENSE RECORDED");
         System.out.println("==================================================");
 
-        System.out.println("Name       : " + name);
-        System.out.println("Amount     : " + amount);
-        System.out.println("Category   : " + category);
-        System.out.println("Timestamp  : " + timestamp);
+        System.out.printf("%-12s: %s%n", "Name", name);
+        System.out.printf("%-12s: %.2f%n", "Amount", amount);
+        System.out.printf("%-12s: %s%n", "Category", category);
+        System.out.printf("%-12s: %s%n", "Timestamp", timestamp);
 
-        System.out.println("==================================================\n");
+        System.out.println("==================================================");
+        System.out.println("[SUCCESS] Expense successfully added.\n");
     }
 
     /**
@@ -92,12 +93,12 @@ public class Expense extends Transaction {
     public String toString() {
 
         return "\n--------------------------------------------------"
-                + "\nEXPENSE RECORD"
+                + "\n                EXPENSE RECORD"
                 + "\n--------------------------------------------------"
-                + "\nName       : " + name
-                + "\nAmount     : " + amount
-                + "\nCategory   : " + category
-                + "\nTimestamp  : " + timestamp
+                + String.format("\n%-12s: %s", "Name", name)
+                + String.format("\n%-12s: %.2f", "Amount", amount)
+                + String.format("\n%-12s: %s", "Category", category)
+                + String.format("\n%-12s: %s", "Timestamp", timestamp)
                 + "\n--------------------------------------------------";
     }
 }

@@ -46,18 +46,21 @@ public class MainApp {
 
             System.out.println("==================================================");
 
-            try {
+            while (true) {
 
-                System.out.print("Enter choice: ");
-                authChoice = sc.nextInt();
+                try {
 
-            } catch (Exception e) {
+                    System.out.print("Enter choice: ");
 
-                System.out.println("Invalid input. Numbers only.");
-                sc.nextLine();
-                continue;
+                    authChoice = Integer.parseInt(sc.nextLine());
+
+                    break;
+
+                } catch (NumberFormatException e) {
+
+                    System.out.println("[ERROR] Invalid input. Numbers only.");
+                }
             }
-
             switch (authChoice) {
 
                 case 1 -> {
@@ -67,20 +70,20 @@ public class MainApp {
                     System.out.println("==================================================");
 
                     System.out.print("Username : ");
-                    String username = sc.next();
+                    String username = sc.nextLine();
 
                     System.out.print("Password : ");
-                    String password = sc.next();
+                    String password = sc.nextLine();
 
                     currentUser = accountService.login(username, password);
 
                     if (currentUser != null) {
 
-                        System.out.println("\nLogin successful.");
+                        System.out.println("\n[SUCCESS] Login successful.");
 
                     } else {
 
-                        System.out.println("\nInvalid username or password.");
+                        System.out.println("\n[ERROR] Invalid username or password.");
                     }
                 }
 
@@ -91,14 +94,14 @@ public class MainApp {
                     System.out.println("==================================================");
 
                     System.out.print("Create Username : ");
-                    String username = sc.next();
+                    String username = sc.nextLine();
 
                     System.out.print("Create Password : ");
-                    String password = sc.next();
+                    String password = sc.nextLine();
 
                     currentUser = accountService.register(username, password);
 
-                    System.out.println("\n✅ Account successfully created.");
+                    System.out.println("\n[SUCCESS] Account successfully created.");
                 }
 
                 case 0 -> {
@@ -111,7 +114,7 @@ public class MainApp {
                     return;
                 }
 
-                default -> System.out.println("Invalid choice.");
+                default -> System.out.println("[ERROR] Invalid choice.");
             }
         }
 
@@ -139,38 +142,42 @@ public class MainApp {
         do {
 
             System.out.println("\n==================================================");
-            System.out.println("        UTANG NA LOOB FINANCE TRACKER");
+            System.out.println("           UTANG NA LOOB FINANCE TRACKER");
             System.out.println("==================================================");
 
-            System.out.println("\n[ EXPENSE MANAGEMENT ]");
-            System.out.println("1. Set Budget");
-            System.out.println("2. Add Expense");
-            System.out.println("3. View Expenses");
-            System.out.println("4. View Budget");
+            System.out.println("\n--------------- EXPENSE MANAGEMENT ---------------");
+            System.out.println("[1] Set Budget");
+            System.out.println("[2] Add Expense");
+            System.out.println("[3] View Expenses");
+            System.out.println("[4] View Budget");
 
-            System.out.println("\n[ TUITION MANAGEMENT ]");
-            System.out.println("5. Setup Tuition");
-            System.out.println("6. Pay Tuition");
-            System.out.println("7. View Tuition");
-            System.out.println("8. View Tuition History");
+            System.out.println("\n--------------- TUITION MANAGEMENT ---------------");
+            System.out.println("[5] Setup Tuition");
+            System.out.println("[6] Pay Tuition");
+            System.out.println("[7] View Tuition");
+            System.out.println("[8] View Tuition History");
 
-            System.out.println("\n[ SERVER ]");
-            System.out.println("9. View Server Logs");
+            System.out.println("\n-------------------- SERVER ----------------------");
+            System.out.println("[9] View Server Logs");
 
-            System.out.println("\n0. Exit");
+            System.out.println("\n[0] Exit");
 
             System.out.println("==================================================");
 
-            try {
+            while (true) {
 
-                System.out.print("Enter choice: ");
-                choice = sc.nextInt();
+                try {
 
-            } catch (Exception e) {
+                    System.out.print("Enter choice: ");
 
-                System.out.println("Invalid input. Numbers only.");
-                sc.nextLine();
-                continue;
+                    choice = Integer.parseInt(sc.nextLine());
+
+                    break;
+
+                } catch (NumberFormatException e) {
+
+                    System.out.println("[ERROR] Invalid input. Numbers only.");
+                }
             }
 
             switch (choice) {
@@ -179,16 +186,20 @@ public class MainApp {
 
                 case 2 -> {
 
-                    finance.addExpense(sc);
+                    boolean success = finance.addExpense(sc);
 
-                    String data = finance.exportLatestExpense(
-                            currentUser.getUsername());
+                    if (success) {
 
-                    client.send(data);
+                        String data = finance.exportLatestExpense(
+                                currentUser.getUsername());
 
-                    System.out.println("\n==================================================");
-                    System.out.println("           EXPENSE UPLOADED");
-                    System.out.println("==================================================");
+                        client.send(data);
+
+                        System.out.println("\n==================================================");
+                        System.out.println("            EXPENSE UPLOADED");
+                        System.out.println("==================================================");
+                        System.out.println("[SUCCESS] Expense transaction sent to server.");
+                    }
                 }
 
                 case 3 -> finance.viewExpenses();
@@ -209,8 +220,9 @@ public class MainApp {
                         client.send(data);
 
                         System.out.println("\n==================================================");
-                        System.out.println("           TUITION UPLOADED");
+                        System.out.println("            TUITION UPLOADED");
                         System.out.println("==================================================");
+                        System.out.println("[SUCCESS] Tuition transaction sent to server.");
                     }
                 }
 
@@ -235,17 +247,17 @@ public class MainApp {
                     autoSave.interrupt();
 
                     System.out.println("\n==================================================");
-                    System.out.println("            SYSTEM TERMINATED");
+                    System.out.println("              SYSTEM TERMINATED");
                     System.out.println("==================================================");
 
                     System.out.println("Thank you for using");
                     System.out.println("UTANG NA LOOB FINANCE TRACKER");
-                    System.out.println("Keep going para hindi mabaon sa utang :)");
+                    System.out.println("Keep going para hindi ka mabaon sa utang :)");
 
                     System.out.println("==================================================");
                 }
 
-                default -> System.out.println("Invalid choice.");
+                default -> System.out.println("[ERROR] Invalid choice.");
             }
 
         } while (choice != 0);

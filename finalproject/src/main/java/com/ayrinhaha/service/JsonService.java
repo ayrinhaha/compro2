@@ -33,7 +33,7 @@ public class JsonService {
 
         } catch (Exception e) {
 
-            System.out.println("No server logs found.");
+            System.out.println("[ERROR] No server logs found.");
         }
     }
 }

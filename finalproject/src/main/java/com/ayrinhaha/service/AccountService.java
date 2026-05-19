@@ -88,7 +88,7 @@ public class AccountService {
         } catch (Exception e) {
 
             System.out.println(
-                    "Account save error.");
+                    "[ERROR] Account save error.");
         }
     }
 
@@ -112,8 +112,7 @@ public class AccountService {
 
             accounts = new ArrayList<>();
 
-            System.out.println(
-                    "No accounts found.");
+            System.out.println("[INFO] No existing accounts found. Creating new storage.");
         }
     }
 

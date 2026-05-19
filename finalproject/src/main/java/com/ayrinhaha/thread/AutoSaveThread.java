@@ -26,7 +26,7 @@ public class AutoSaveThread extends Thread {
      *
      * @param accountService handles account persistence
      * @param financeService runtime finance operations
-     * @param currentUser currently logged-in user
+     * @param currentUser    currently logged-in user
      */
     public AutoSaveThread(
             AccountService accountService,
@@ -50,24 +50,15 @@ public class AutoSaveThread extends Thread {
 
                 Thread.sleep(10000);
 
-                currentUser.budget =
-                        financeService.getBudget();
+                currentUser.budget = financeService.getBudget();
 
-                currentUser.expenses =
-                        financeService.getExpensesCopy();
+                currentUser.expenses = financeService.getExpensesCopy();
 
-                currentUser.tuition =
-                        financeService.getTuition();
-
-
+                currentUser.tuition = financeService.getTuition();
 
                 accountService.sync(currentUser);
 
             } catch (InterruptedException e) {
-
-                System.out.println(
-                        "\n[AUTOSAVE THREAD INTERRUPTED]");
-
                 break;
             }
         }
