@@ -22,6 +22,8 @@ public class FinanceService {
 
     private Repository<Expense> expenses = new Repository<>();
     private Tuition tuition = new Tuition();
+    private double startingBudget = 0;
+    private int lastCheckedMonth = LocalDate.now().getMonthValue();
 
     /**
      * Expense-only budget.
@@ -45,10 +47,17 @@ public class FinanceService {
      */
     private void checkMonthlyReset() {
 
-        int currentMonth = LocalDate.now().getMonthValue();
+        LocalDate today = LocalDate.now();
+        int currentMonth = today.getMonthValue();
+        int currentYear = today.getYear();
+
+        if (currentMonth != lastCheckedMonth) {
+            this.budget = this.startingBudget;
+            this.lastCheckedMonth = currentMonth;
+        }
 
         expenses.getAll().removeIf(
-                e -> e.getMonth() != currentMonth);
+                e -> e.getMonth() != currentMonth || e.getYear() != currentYear);
     }
 
     /**
@@ -66,14 +75,16 @@ public class FinanceService {
 
                 System.out.print("Enter budget: ");
 
-                budget = Double.parseDouble(sc.nextLine());
+                double inputBudget = Double.parseDouble(sc.nextLine());
 
-                if (budget <= 0) {
+                if (inputBudget <= 0) {
 
                     System.out.println("[ERROR] Budget must be greater than 0.");
                     continue;
                 }
 
+                this.startingBudget = inputBudget;
+                this.budget = inputBudget;
                 break;
 
             } catch (NumberFormatException e) {
@@ -324,11 +335,13 @@ public class FinanceService {
 
         expenses.getAll().clear();
 
-        int currentMonth = LocalDate.now().getMonthValue();
+        LocalDate today = LocalDate.now();
+        int currentMonth = today.getMonthValue();
+        int currentYear = today.getYear();
 
         for (Expense e : list) {
 
-            if (e.getMonth() == currentMonth) {
+            if (e.getMonth() == currentMonth && e.getYear() == currentYear) {
                 expenses.add(e);
             }
         }

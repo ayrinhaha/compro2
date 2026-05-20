@@ -1,6 +1,7 @@
 package com.ayrinhaha.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Represents an expense transaction in the system.
@@ -70,6 +71,10 @@ public class Expense extends Transaction {
 
     public int getMonth() {
         return month;
+    }
+
+    public int getYear() {
+        return LocalDateTime.parse(this.timestamp).getYear();
     }
 
     public String getName() {

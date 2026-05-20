@@ -135,9 +135,7 @@ public class Tuition {
         public boolean payTuition(Scanner sc) {
 
                 if (!isInitialized) {
-
                         System.out.println("[ERROR] Please setup tuition first.");
-
                         return false;
                 }
 
@@ -147,106 +145,120 @@ public class Tuition {
 
                 int i = 1;
 
+                // Print individual stages
                 for (Stage s : Stage.values()) {
-
                         System.out.printf(
                                         "%d. %-12s - %.2f%n",
                                         i,
                                         s,
                                         amounts.get(s));
-
                         i++;
                 }
+
+                int payAllChoice = i;
+                System.out.printf("%d. %-12s - %.2f%n", payAllChoice, "PAY ALL REMAINING", getRemainingBalance());
 
                 int choice;
 
                 while (true) {
-
                         try {
-
                                 System.out.print("\nSelect stage: ");
-
                                 choice = Integer.parseInt(sc.nextLine());
 
-                                if (choice < 1 || choice > Stage.values().length) {
-
+                                // Update validation to include the new "Pay All" choice
+                                if (choice < 1 || choice > payAllChoice) {
                                         System.out.println("[ERROR] Invalid stage.");
                                         continue;
                                 }
-
                                 break;
 
                         } catch (NumberFormatException e) {
                                 System.out.println("[ERROR] Invalid input.");
+                        }
+                }
+
+                if (choice == payAllChoice) {
+                        if (getRemainingBalance() == 0) {
+                                System.out.println("[ERROR] Tuition is already fully paid.");
+                                return false;
+                        }
+
+                        System.out.printf("\nTotal Remaining Amount : %.2f%n", getRemainingBalance());
+                        System.out.println("\nConfirm Full Payment?");
+                        System.out.println("1. Yes");
+                        System.out.println("2. No");
+                        System.out.print("Enter choice: ");
+
+                        int confirm = getConfirmation(sc);
+
+                        if (confirm == 1) {
+                                // Loop through all stages and pay the unpaid ones
+                                for (Stage s : Stage.values()) {
+                                        if (!status.get(s)) {
+                                                status.put(s, true);
+                                                TuitionPayment payment = new TuitionPayment(s, amounts.get(s));
+                                                history.add(payment);
+                                        }
+                                }
+                                System.out.println("\n[SUCCESS] All remaining tuition fully paid.");
+                                viewStatus();
+                                return true;
+                        } else {
+                                System.out.println("[INFO] Payment cancelled.");
+                                return false;
                         }
                 }
 
                 Stage selected = Stage.values()[choice - 1];
 
                 if (status.get(selected)) {
-
-                        System.out.println(
-                                        "[ERROR] Already PAID: " + selected);
-
+                        System.out.println("[ERROR] Already PAID: " + selected);
                         return false;
                 }
 
                 System.out.printf("\nSelected Amount : %.2f%n", amounts.get(selected));
-
                 System.out.println("\nConfirm Payment?");
                 System.out.println("1. Yes");
                 System.out.println("2. No");
                 System.out.print("Enter choice: ");
 
-                int confirm;
-
-                while (true) {
-
-                        try {
-
-                                confirm = Integer.parseInt(sc.nextLine());
-
-                                if (confirm != 1 && confirm != 2) {
-
-                                        System.out.println("Enter 1 or 2.");
-                                        continue;
-                                }
-
-                                break;
-
-                        } catch (NumberFormatException e) {
-
-                                System.out.println("[ERROR] Invalid input.");
-                        }
-                }
+                int confirm = getConfirmation(sc);
 
                 if (confirm == 1) {
-
                         status.put(selected, true);
-
-                        TuitionPayment payment = new TuitionPayment(
-                                        selected,
-                                        amounts.get(selected));
-
+                        TuitionPayment payment = new TuitionPayment(selected, amounts.get(selected));
                         history.add(payment);
 
                         System.out.println("\n[SUCCESS] " + selected + " payment completed.");
 
                         if (getRemainingBalance() == 0) {
-
                                 System.out.println("\n[SUCCESS] Tuition fully paid.");
                         }
 
                         viewStatus();
-
                         return true;
 
                 } else {
-
                         System.out.println("[INFO] Payment cancelled.");
-
                         return false;
                 }
+        }
+
+        private int getConfirmation(Scanner sc) {
+                int confirm;
+                while (true) {
+                        try {
+                                confirm = Integer.parseInt(sc.nextLine());
+                                if (confirm != 1 && confirm != 2) {
+                                        System.out.println("Enter 1 or 2.");
+                                        continue;
+                                }
+                                break;
+                        } catch (NumberFormatException e) {
+                                System.out.println("[ERROR] Invalid input.");
+                        }
+                }
+                return confirm;
         }
 
         /**

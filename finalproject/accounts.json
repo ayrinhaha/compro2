@@ -39,7 +39,7 @@
     "password": "1117"
   },
   {
-    "budget": 102574.0,
+    "budget": 2707.0,
     "expenses": [
       {
         "category": "Wants",
@@ -54,6 +54,20 @@
         "name": "Phone case",
         "amount": 99.0,
         "timestamp": "2026-05-19T21:50:00.495952100"
+      },
+      {
+        "category": "Necessity",
+        "month": 5,
+        "name": "Aquaflask Tumbler",
+        "amount": 750.0,
+        "timestamp": "2026-05-20T10:52:20.356617"
+      },
+      {
+        "category": "Misc",
+        "month": 5,
+        "name": "Phone Case",
+        "amount": 7890.0,
+        "timestamp": "2026-05-20T11:08:12.908624200"
       }
     ],
     "tuition": {
@@ -159,5 +173,82 @@
     },
     "username": "Jake Cyrus",
     "password": "00"
+  },
+  {
+    "budget": 0.0,
+    "expenses": [],
+    "tuition": {
+      "history": [
+        {
+          "stage": "DOWNPAYMENT",
+          "amount": 1500.0,
+          "timestamp": "2026-05-20T11:14:52.818435900"
+        }
+      ],
+      "fullTuition": 6000.0,
+      "discountedTuition": 6000.0,
+      "discountRate": 0.0,
+      "isInitialized": true,
+      "amounts": {
+        "DOWNPAYMENT": 1500.0,
+        "MIDTERM": 1500.0,
+        "PRELIM": 1500.0,
+        "FINALS": 1500.0
+      },
+      "status": {
+        "DOWNPAYMENT": true,
+        "MIDTERM": false,
+        "PRELIM": false,
+        "FINALS": false
+      }
+    },
+    "username": "kianqtyyy",
+    "password": "1234567891067"
+  },
+  {
+    "budget": 0.0,
+    "expenses": [],
+    "tuition": {
+      "history": [
+        {
+          "stage": "DOWNPAYMENT",
+          "amount": 675.0,
+          "timestamp": "2026-05-20T11:22:57.540068500"
+        },
+        {
+          "stage": "PRELIM",
+          "amount": 675.0,
+          "timestamp": "2026-05-20T11:22:57.540068500"
+        },
+        {
+          "stage": "MIDTERM",
+          "amount": 675.0,
+          "timestamp": "2026-05-20T11:22:57.540068500"
+        },
+        {
+          "stage": "FINALS",
+          "amount": 675.0,
+          "timestamp": "2026-05-20T11:22:57.540068500"
+        }
+      ],
+      "fullTuition": 27000.0,
+      "discountedTuition": 2700.0,
+      "discountRate": 90.0,
+      "isInitialized": true,
+      "amounts": {
+        "DOWNPAYMENT": 675.0,
+        "MIDTERM": 675.0,
+        "PRELIM": 675.0,
+        "FINALS": 675.0
+      },
+      "status": {
+        "DOWNPAYMENT": true,
+        "MIDTERM": true,
+        "PRELIM": true,
+        "FINALS": true
+      }
+    },
+    "username": "Louise",
+    "password": "000"
   }
 ]
