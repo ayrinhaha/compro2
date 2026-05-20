@@ -214,7 +214,7 @@ public class MainApp {
 
                     if (success) {
 
-                        String data = finance.exportTuition(
+                        String data = finance.exportBulkTuition(
                                 currentUser.getUsername());
 
                         client.send(data);
@@ -236,8 +236,7 @@ public class MainApp {
                     System.out.println("          SERVER TRANSACTION LOG");
                     System.out.println("==================================================");
 
-                    json.loadServerLogs(
-                            currentUser.getUsername());
+                    json.loadServerLogs(currentUser.getUsername());
 
                     System.out.println("==================================================");
                 }

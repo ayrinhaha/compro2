@@ -147,43 +147,63 @@ public class Tuition {
 
                 // Print individual stages
                 for (Stage s : Stage.values()) {
+
                         System.out.printf(
                                         "%d. %-12s - %.2f%n",
                                         i,
                                         s,
                                         amounts.get(s));
+
                         i++;
                 }
 
                 int payAllChoice = i;
-                System.out.printf("%d. %-12s - %.2f%n", payAllChoice, "PAY ALL REMAINING", getRemainingBalance());
+
+                System.out.printf(
+                                "%d. %-12s - %.2f%n",
+                                payAllChoice,
+                                "PAY ALL",
+                                getRemainingBalance());
 
                 int choice;
 
                 while (true) {
+
                         try {
+
                                 System.out.print("\nSelect stage: ");
+
                                 choice = Integer.parseInt(sc.nextLine());
 
-                                // Update validation to include the new "Pay All" choice
                                 if (choice < 1 || choice > payAllChoice) {
+
                                         System.out.println("[ERROR] Invalid stage.");
                                         continue;
                                 }
+
                                 break;
 
                         } catch (NumberFormatException e) {
+
                                 System.out.println("[ERROR] Invalid input.");
                         }
                 }
 
+                /**
+                 * Pay all logic with confirmation.
+                 */
                 if (choice == payAllChoice) {
+
                         if (getRemainingBalance() == 0) {
-                                System.out.println("[ERROR] Tuition is already fully paid.");
+
+                                System.out.println("[ERROR] Tuition already fully paid.");
                                 return false;
                         }
 
-                        System.out.printf("\nTotal Remaining Amount : %.2f%n", getRemainingBalance());
+                        System.out.printf(
+                                        "\nTotal Remaining Amount : %.2f%n",
+                                        getRemainingBalance());
+
                         System.out.println("\nConfirm Full Payment?");
                         System.out.println("1. Yes");
                         System.out.println("2. No");
@@ -192,31 +212,58 @@ public class Tuition {
                         int confirm = getConfirmation(sc);
 
                         if (confirm == 1) {
-                                // Loop through all stages and pay the unpaid ones
+
+                                /**
+                                 * Shared timestamp for all stages.
+                                 */
+                                String sharedTimestamp = java.time.LocalDateTime.now().toString();
+
                                 for (Stage s : Stage.values()) {
+
                                         if (!status.get(s)) {
+
                                                 status.put(s, true);
-                                                TuitionPayment payment = new TuitionPayment(s, amounts.get(s));
+
+                                                TuitionPayment payment = new TuitionPayment(
+                                                                s,
+                                                                amounts.get(s),
+                                                                sharedTimestamp);
+
                                                 history.add(payment);
                                         }
                                 }
-                                System.out.println("\n[SUCCESS] All remaining tuition fully paid.");
+
+                                System.out.println(
+                                                "\n[SUCCESS] All remaining tuition fully paid.");
+
                                 viewStatus();
+
                                 return true;
+
                         } else {
+
                                 System.out.println("[INFO] Payment cancelled.");
                                 return false;
                         }
                 }
 
+                /**
+                 * SINGLE PAYMENT LOGIC
+                 */
                 Stage selected = Stage.values()[choice - 1];
 
                 if (status.get(selected)) {
-                        System.out.println("[ERROR] Already PAID: " + selected);
+
+                        System.out.println(
+                                        "[ERROR] Already PAID: " + selected);
+
                         return false;
                 }
 
-                System.out.printf("\nSelected Amount : %.2f%n", amounts.get(selected));
+                System.out.printf(
+                                "\nSelected Amount : %.2f%n",
+                                amounts.get(selected));
+
                 System.out.println("\nConfirm Payment?");
                 System.out.println("1. Yes");
                 System.out.println("2. No");
@@ -225,40 +272,129 @@ public class Tuition {
                 int confirm = getConfirmation(sc);
 
                 if (confirm == 1) {
+
                         status.put(selected, true);
-                        TuitionPayment payment = new TuitionPayment(selected, amounts.get(selected));
+
+                        TuitionPayment payment = new TuitionPayment(
+                                        selected,
+                                        amounts.get(selected));
+
                         history.add(payment);
 
-                        System.out.println("\n[SUCCESS] " + selected + " payment completed.");
+                        System.out.println(
+                                        "\n[SUCCESS] "
+                                                        + selected
+                                                        + " payment completed.");
 
                         if (getRemainingBalance() == 0) {
-                                System.out.println("\n[SUCCESS] Tuition fully paid.");
+
+                                System.out.println(
+                                                "\n[SUCCESS] Tuition fully paid.");
                         }
 
                         viewStatus();
+
                         return true;
 
                 } else {
+
                         System.out.println("[INFO] Payment cancelled.");
                         return false;
                 }
+
         }
 
+        /**
+         * Handles confirmation input validation.
+         *
+         * @param sc scanner input
+         * @return validated confirmation choice
+         */
         private int getConfirmation(Scanner sc) {
+
                 int confirm;
+
                 while (true) {
+
                         try {
+
                                 confirm = Integer.parseInt(sc.nextLine());
+
                                 if (confirm != 1 && confirm != 2) {
-                                        System.out.println("Enter 1 or 2.");
+
+                                        System.out.println("Enter 1 or 2:");
                                         continue;
                                 }
+
                                 break;
+
                         } catch (NumberFormatException e) {
+
                                 System.out.println("[ERROR] Invalid input.");
                         }
                 }
+
                 return confirm;
+        }
+
+        /**
+         * Exports all latest tuition payments
+         * that share the same timestamp.
+         *
+         * Used for PAY ALL transactions.
+         *
+         * @param username account owner
+         * @return JSON array string
+         */
+        public String exportLatestBulkPayments(String username) {
+
+                if (history.isEmpty()) {
+
+                        return "[]";
+                }
+
+                String latestTimestamp = history.get(history.size() - 1)
+                                .getTimestamp();
+
+                StringBuilder json = new StringBuilder();
+
+                json.append("[");
+
+                boolean first = true;
+
+                for (TuitionPayment payment : history) {
+
+                        if (payment.getTimestamp()
+                                        .equals(latestTimestamp)) {
+
+                                if (!first) {
+
+                                        json.append(",");
+                                }
+
+                                json.append("{")
+                                                .append("\"type\":\"TUITION\",")
+                                                .append("\"username\":\"")
+                                                .append(username)
+                                                .append("\",")
+                                                .append("\"stage\":\"")
+                                                .append(payment.getStage())
+                                                .append("\",")
+                                                .append("\"amount\":")
+                                                .append(payment.getAmount())
+                                                .append(",")
+                                                .append("\"timestamp\":\"")
+                                                .append(payment.getTimestamp())
+                                                .append("\"")
+                                                .append("}");
+
+                                first = false;
+                        }
+                }
+
+                json.append("]");
+
+                return json.toString();
         }
 
         /**

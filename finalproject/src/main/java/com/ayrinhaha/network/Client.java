@@ -16,14 +16,28 @@ public class Client {
      * @param data The JSON formatted string payload.
      */
     public void send(String data) {
-        try (Socket socket = new Socket("localhost", 5000);
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
 
-            out.println(data);
-            System.out.println("\n[SUCCESS] Data sent to server.");
+        try (
+                Socket socket = new Socket("localhost", 5000);
+                PrintWriter writer = new PrintWriter(
+                        socket.getOutputStream(),
+                        true);) {
+
+            writer.println(data);
+
+            writer.flush();
+
+            socket.shutdownOutput();
+
+            System.out.println(
+                    "[SUCCESS] Data sent to server.");
 
         } catch (Exception e) {
-            System.out.println("[ERROR] Unable to connect to server.");
+
+            System.out.println(
+                    "[ERROR] Failed to send data.");
+
+            e.printStackTrace();
         }
     }
 }

@@ -230,6 +230,17 @@ public class FinanceService {
     }
 
     /**
+     * Exports latest bulk tuition payments.
+     *
+     * @param username account owner
+     * @return tuition JSON array
+     */
+    public String exportBulkTuition(String username) {
+
+        return tuition.exportLatestBulkPayments(username);
+    }
+
+    /**
      * Delegates tuition setup.
      *
      * @param sc Scanner input
@@ -244,8 +255,12 @@ public class FinanceService {
      * @param sc Scanner input
      */
     public boolean payTuition(Scanner sc) {
+
+        
         return tuition.payTuition(sc);
     }
+
+    
 
     /**
      * Displays tuition status.

@@ -250,5 +250,97 @@
     },
     "username": "Louise",
     "password": "000"
+  },
+  {
+    "budget": 0.0,
+    "expenses": [],
+    "tuition": {
+      "history": [
+        {
+          "stage": "DOWNPAYMENT",
+          "amount": 6750.0,
+          "timestamp": "2026-05-20T11:37:42.381047900"
+        },
+        {
+          "stage": "PRELIM",
+          "amount": 6750.0,
+          "timestamp": "2026-05-20T11:37:42.381047900"
+        },
+        {
+          "stage": "MIDTERM",
+          "amount": 6750.0,
+          "timestamp": "2026-05-20T11:37:42.381047900"
+        },
+        {
+          "stage": "FINALS",
+          "amount": 6750.0,
+          "timestamp": "2026-05-20T11:37:42.381047900"
+        }
+      ],
+      "fullTuition": 27000.0,
+      "discountedTuition": 27000.0,
+      "discountRate": 0.0,
+      "isInitialized": true,
+      "amounts": {
+        "DOWNPAYMENT": 6750.0,
+        "MIDTERM": 6750.0,
+        "PRELIM": 6750.0,
+        "FINALS": 6750.0
+      },
+      "status": {
+        "DOWNPAYMENT": true,
+        "MIDTERM": true,
+        "PRELIM": true,
+        "FINALS": true
+      }
+    },
+    "username": "Nicole",
+    "password": ""
+  },
+  {
+    "budget": 0.0,
+    "expenses": [],
+    "tuition": {
+      "history": [
+        {
+          "stage": "DOWNPAYMENT",
+          "amount": 359.5,
+          "timestamp": "2026-05-20T11:45:21.075651500"
+        },
+        {
+          "stage": "PRELIM",
+          "amount": 359.5,
+          "timestamp": "2026-05-20T11:45:21.075651500"
+        },
+        {
+          "stage": "MIDTERM",
+          "amount": 359.5,
+          "timestamp": "2026-05-20T11:45:21.075651500"
+        },
+        {
+          "stage": "FINALS",
+          "amount": 359.5,
+          "timestamp": "2026-05-20T11:45:21.075651500"
+        }
+      ],
+      "fullTuition": 1438.0,
+      "discountedTuition": 1438.0,
+      "discountRate": 0.0,
+      "isInitialized": true,
+      "amounts": {
+        "DOWNPAYMENT": 359.5,
+        "MIDTERM": 359.5,
+        "PRELIM": 359.5,
+        "FINALS": 359.5
+      },
+      "status": {
+        "DOWNPAYMENT": true,
+        "MIDTERM": true,
+        "PRELIM": true,
+        "FINALS": true
+      }
+    },
+    "username": "Sino",
+    "password": "000"
   }
 ]
