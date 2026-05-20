@@ -1,0 +1,5 @@
+[
+{"type":"EXPENSE","username":"Loren","name":"Trip to jerusalem","amount":500000.0,"category":"Travel with bebe","timestamp":"2026-05-20T12:21:03.277011500"}
+,
+[{"type":"TUITION","username":"Loren","stage":"DOWNPAYMENT","amount":7250.0,"timestamp":"2026-05-20T12:22:43.569166500"},{"type":"TUITION","username":"Loren","stage":"PRELIM","amount":7250.0,"timestamp":"2026-05-20T12:22:43.569166500"},{"type":"TUITION","username":"Loren","stage":"MIDTERM","amount":7250.0,"timestamp":"2026-05-20T12:22:43.569166500"},{"type":"TUITION","username":"Loren","stage":"FINALS","amount":7250.0,"timestamp":"2026-05-20T12:22:43.569166500"}]
+]

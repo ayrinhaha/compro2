@@ -1,0 +1,50 @@
+[
+    {
+        "type": "EXPENSE",
+        "username": "Irene",
+        "name": "Phone",
+        "amount": 15000.0,
+        "category": "Wants",
+        "timestamp": "2026-05-19T20:56:18.432772800"
+    },
+    {
+        "type": "TUITION",
+        "username": "Irene",
+        "stage": "DOWNPAYMENT",
+        "amount": 24197.25,
+        "timestamp": "2026-05-19T20:56:44.425840500"
+    },
+    {
+        "type": "TUITION",
+        "username": "Irene",
+        "stage": "PRELIM",
+        "amount": 24197.25,
+        "timestamp": "2026-05-19T20:56:51.719699800"
+    },
+    {
+        "type": "TUITION",
+        "username": "Irene",
+        "stage": "MIDTERM",
+        "amount": 24197.25,
+        "timestamp": "2026-05-19T20:57:02.344009600"
+    },
+    {
+        "type": "TUITION",
+        "username": "Irene",
+        "stage": "FINALS",
+        "amount": 24197.25,
+        "timestamp": "2026-05-19T20:57:32.145269900"
+    },
+    {
+        "type": "EXPENSE",
+        "username": "Irene",
+        "name": "Phone case",
+        "amount": 99.0,
+        "category": "Misc2",
+        "timestamp": "2026-05-19T21:50:00.495952100"
+    }
+,
+{"type":"EXPENSE","username":"Irene","name":"Aquaflask Tumbler","amount":750.0,"category":"Necessity","timestamp":"2026-05-20T10:52:20.356617"}
+,
+{"type":"EXPENSE","username":"Irene","name":"Phone Case","amount":7890.0,"category":"Misc","timestamp":"2026-05-20T11:08:12.908624200"}
+]

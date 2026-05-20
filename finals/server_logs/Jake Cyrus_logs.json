@@ -1,0 +1,46 @@
+[
+    {
+        "type": "EXPENSE",
+        "username": "Jake Cyrus",
+        "name": "Samgyup",
+        "amount": 199.0,
+        "category": "Food",
+        "timestamp": "2026-05-19T21:46:38.240807100"
+    },
+    {
+        "type": "EXPENSE",
+        "username": "Jake Cyrus",
+        "name": "Jollibee",
+        "amount": 78.0,
+        "category": "Food",
+        "timestamp": "2026-05-19T21:47:19.009064800"
+    },
+    {
+        "type": "TUITION",
+        "username": "Jake Cyrus",
+        "stage": "DOWNPAYMENT",
+        "amount": 200.0,
+        "timestamp": "2026-05-19T21:48:13.895537500"
+    },
+    {
+        "type": "TUITION",
+        "username": "Jake Cyrus",
+        "stage": "PRELIM",
+        "amount": 200.0,
+        "timestamp": "2026-05-19T21:48:19.960479"
+    },
+    {
+        "type": "TUITION",
+        "username": "Jake Cyrus",
+        "stage": "MIDTERM",
+        "amount": 200.0,
+        "timestamp": "2026-05-19T21:48:22.175423500"
+    },
+    {
+        "type": "TUITION",
+        "username": "Jake Cyrus",
+        "stage": "FINALS",
+        "amount": 200.0,
+        "timestamp": "2026-05-19T21:48:25.985545300"
+    }
+]

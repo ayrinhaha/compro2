@@ -1,0 +1,400 @@
+[
+  {
+    "budget": 2.9783909E7,
+    "expenses": [
+      {
+        "category": "Food",
+        "month": 5,
+        "name": "Lunch",
+        "amount": 122.0,
+        "timestamp": "2026-05-18T01:48:34.225810500"
+      }
+    ],
+    "tuition": {
+      "history": [
+        {
+          "stage": "DOWNPAYMENT",
+          "amount": 23308.875,
+          "timestamp": "2026-05-18T01:48:48.103298100"
+        }
+      ],
+      "fullTuition": 124314.0,
+      "discountedTuition": 93235.5,
+      "discountRate": 25.0,
+      "isInitialized": true,
+      "amounts": {
+        "MIDTERM": 23308.875,
+        "FINALS": 23308.875,
+        "DOWNPAYMENT": 23308.875,
+        "PRELIM": 23308.875
+      },
+      "status": {
+        "MIDTERM": false,
+        "FINALS": false,
+        "DOWNPAYMENT": true,
+        "PRELIM": false
+      }
+    },
+    "username": "Anne",
+    "password": "1117"
+  },
+  {
+    "budget": 2707.0,
+    "expenses": [
+      {
+        "category": "Wants",
+        "month": 5,
+        "name": "Phone",
+        "amount": 15000.0,
+        "timestamp": "2026-05-19T20:56:18.432772800"
+      },
+      {
+        "category": "Misc2",
+        "month": 5,
+        "name": "Phone case",
+        "amount": 99.0,
+        "timestamp": "2026-05-19T21:50:00.495952100"
+      },
+      {
+        "category": "Necessity",
+        "month": 5,
+        "name": "Aquaflask Tumbler",
+        "amount": 750.0,
+        "timestamp": "2026-05-20T10:52:20.356617"
+      },
+      {
+        "category": "Misc",
+        "month": 5,
+        "name": "Phone Case",
+        "amount": 7890.0,
+        "timestamp": "2026-05-20T11:08:12.908624200"
+      }
+    ],
+    "tuition": {
+      "history": [
+        {
+          "stage": "DOWNPAYMENT",
+          "amount": 24197.25,
+          "timestamp": "2026-05-19T20:56:44.425840500"
+        },
+        {
+          "stage": "PRELIM",
+          "amount": 24197.25,
+          "timestamp": "2026-05-19T20:56:51.719699800"
+        },
+        {
+          "stage": "MIDTERM",
+          "amount": 24197.25,
+          "timestamp": "2026-05-19T20:57:02.344009600"
+        },
+        {
+          "stage": "FINALS",
+          "amount": 24197.25,
+          "timestamp": "2026-05-19T20:57:32.145269900"
+        }
+      ],
+      "fullTuition": 967890.0,
+      "discountedTuition": 96789.0,
+      "discountRate": 90.0,
+      "isInitialized": true,
+      "amounts": {
+        "MIDTERM": 24197.25,
+        "FINALS": 24197.25,
+        "DOWNPAYMENT": 24197.25,
+        "PRELIM": 24197.25
+      },
+      "status": {
+        "MIDTERM": true,
+        "FINALS": true,
+        "DOWNPAYMENT": true,
+        "PRELIM": true
+      }
+    },
+    "username": "Irene",
+    "password": "123456789"
+  },
+  {
+    "budget": 16037.0,
+    "expenses": [
+      {
+        "category": "Food",
+        "month": 5,
+        "name": "Samgyup",
+        "amount": 199.0,
+        "timestamp": "2026-05-19T21:46:38.240807100"
+      },
+      {
+        "category": "Food",
+        "month": 5,
+        "name": "Jollibee",
+        "amount": 78.0,
+        "timestamp": "2026-05-19T21:47:19.009064800"
+      }
+    ],
+    "tuition": {
+      "history": [
+        {
+          "stage": "DOWNPAYMENT",
+          "amount": 200.0,
+          "timestamp": "2026-05-19T21:48:13.895537500"
+        },
+        {
+          "stage": "PRELIM",
+          "amount": 200.0,
+          "timestamp": "2026-05-19T21:48:19.960479"
+        },
+        {
+          "stage": "MIDTERM",
+          "amount": 200.0,
+          "timestamp": "2026-05-19T21:48:22.175423500"
+        },
+        {
+          "stage": "FINALS",
+          "amount": 200.0,
+          "timestamp": "2026-05-19T21:48:25.985545300"
+        }
+      ],
+      "fullTuition": 8000.0,
+      "discountedTuition": 800.0,
+      "discountRate": 90.0,
+      "isInitialized": true,
+      "amounts": {
+        "MIDTERM": 200.0,
+        "FINALS": 200.0,
+        "DOWNPAYMENT": 200.0,
+        "PRELIM": 200.0
+      },
+      "status": {
+        "MIDTERM": true,
+        "FINALS": true,
+        "DOWNPAYMENT": true,
+        "PRELIM": true
+      }
+    },
+    "username": "Jake Cyrus",
+    "password": "00"
+  },
+  {
+    "budget": 0.0,
+    "expenses": [],
+    "tuition": {
+      "history": [
+        {
+          "stage": "DOWNPAYMENT",
+          "amount": 1500.0,
+          "timestamp": "2026-05-20T11:14:52.818435900"
+        }
+      ],
+      "fullTuition": 6000.0,
+      "discountedTuition": 6000.0,
+      "discountRate": 0.0,
+      "isInitialized": true,
+      "amounts": {
+        "DOWNPAYMENT": 1500.0,
+        "MIDTERM": 1500.0,
+        "PRELIM": 1500.0,
+        "FINALS": 1500.0
+      },
+      "status": {
+        "DOWNPAYMENT": true,
+        "MIDTERM": false,
+        "PRELIM": false,
+        "FINALS": false
+      }
+    },
+    "username": "kianqtyyy",
+    "password": "1234567891067"
+  },
+  {
+    "budget": 0.0,
+    "expenses": [],
+    "tuition": {
+      "history": [
+        {
+          "stage": "DOWNPAYMENT",
+          "amount": 675.0,
+          "timestamp": "2026-05-20T11:22:57.540068500"
+        },
+        {
+          "stage": "PRELIM",
+          "amount": 675.0,
+          "timestamp": "2026-05-20T11:22:57.540068500"
+        },
+        {
+          "stage": "MIDTERM",
+          "amount": 675.0,
+          "timestamp": "2026-05-20T11:22:57.540068500"
+        },
+        {
+          "stage": "FINALS",
+          "amount": 675.0,
+          "timestamp": "2026-05-20T11:22:57.540068500"
+        }
+      ],
+      "fullTuition": 27000.0,
+      "discountedTuition": 2700.0,
+      "discountRate": 90.0,
+      "isInitialized": true,
+      "amounts": {
+        "DOWNPAYMENT": 675.0,
+        "MIDTERM": 675.0,
+        "PRELIM": 675.0,
+        "FINALS": 675.0
+      },
+      "status": {
+        "DOWNPAYMENT": true,
+        "MIDTERM": true,
+        "PRELIM": true,
+        "FINALS": true
+      }
+    },
+    "username": "Louise",
+    "password": "000"
+  },
+  {
+    "budget": 0.0,
+    "expenses": [],
+    "tuition": {
+      "history": [
+        {
+          "stage": "DOWNPAYMENT",
+          "amount": 6750.0,
+          "timestamp": "2026-05-20T11:37:42.381047900"
+        },
+        {
+          "stage": "PRELIM",
+          "amount": 6750.0,
+          "timestamp": "2026-05-20T11:37:42.381047900"
+        },
+        {
+          "stage": "MIDTERM",
+          "amount": 6750.0,
+          "timestamp": "2026-05-20T11:37:42.381047900"
+        },
+        {
+          "stage": "FINALS",
+          "amount": 6750.0,
+          "timestamp": "2026-05-20T11:37:42.381047900"
+        }
+      ],
+      "fullTuition": 27000.0,
+      "discountedTuition": 27000.0,
+      "discountRate": 0.0,
+      "isInitialized": true,
+      "amounts": {
+        "DOWNPAYMENT": 6750.0,
+        "MIDTERM": 6750.0,
+        "PRELIM": 6750.0,
+        "FINALS": 6750.0
+      },
+      "status": {
+        "DOWNPAYMENT": true,
+        "MIDTERM": true,
+        "PRELIM": true,
+        "FINALS": true
+      }
+    },
+    "username": "Nicole",
+    "password": ""
+  },
+  {
+    "budget": 0.0,
+    "expenses": [],
+    "tuition": {
+      "history": [
+        {
+          "stage": "DOWNPAYMENT",
+          "amount": 359.5,
+          "timestamp": "2026-05-20T11:45:21.075651500"
+        },
+        {
+          "stage": "PRELIM",
+          "amount": 359.5,
+          "timestamp": "2026-05-20T11:45:21.075651500"
+        },
+        {
+          "stage": "MIDTERM",
+          "amount": 359.5,
+          "timestamp": "2026-05-20T11:45:21.075651500"
+        },
+        {
+          "stage": "FINALS",
+          "amount": 359.5,
+          "timestamp": "2026-05-20T11:45:21.075651500"
+        }
+      ],
+      "fullTuition": 1438.0,
+      "discountedTuition": 1438.0,
+      "discountRate": 0.0,
+      "isInitialized": true,
+      "amounts": {
+        "DOWNPAYMENT": 359.5,
+        "MIDTERM": 359.5,
+        "PRELIM": 359.5,
+        "FINALS": 359.5
+      },
+      "status": {
+        "DOWNPAYMENT": true,
+        "MIDTERM": true,
+        "PRELIM": true,
+        "FINALS": true
+      }
+    },
+    "username": "Sino",
+    "password": "000"
+  },
+  {
+    "budget": 500000.0,
+    "expenses": [
+      {
+        "category": "Travel with bebe",
+        "month": 5,
+        "name": "Trip to jerusalem",
+        "amount": 500000.0,
+        "timestamp": "2026-05-20T12:21:03.277011500"
+      }
+    ],
+    "tuition": {
+      "history": [
+        {
+          "stage": "DOWNPAYMENT",
+          "amount": 7250.0,
+          "timestamp": "2026-05-20T12:22:43.569166500"
+        },
+        {
+          "stage": "PRELIM",
+          "amount": 7250.0,
+          "timestamp": "2026-05-20T12:22:43.569166500"
+        },
+        {
+          "stage": "MIDTERM",
+          "amount": 7250.0,
+          "timestamp": "2026-05-20T12:22:43.569166500"
+        },
+        {
+          "stage": "FINALS",
+          "amount": 7250.0,
+          "timestamp": "2026-05-20T12:22:43.569166500"
+        }
+      ],
+      "fullTuition": 29000.0,
+      "discountedTuition": 29000.0,
+      "discountRate": 0.0,
+      "isInitialized": true,
+      "amounts": {
+        "DOWNPAYMENT": 7250.0,
+        "MIDTERM": 7250.0,
+        "PRELIM": 7250.0,
+        "FINALS": 7250.0
+      },
+      "status": {
+        "DOWNPAYMENT": true,
+        "MIDTERM": true,
+        "PRELIM": true,
+        "FINALS": true
+      }
+    },
+    "username": "Loren",
+    "password": "JL143"
+  }
+]

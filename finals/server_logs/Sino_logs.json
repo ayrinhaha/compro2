@@ -1,0 +1,32 @@
+[
+    [
+        {
+            "type": "TUITION",
+            "username": "Sino",
+            "stage": "DOWNPAYMENT",
+            "amount": 359.5,
+            "timestamp": "2026-05-20T11:45:21.075651500"
+        },
+        {
+            "type": "TUITION",
+            "username": "Sino",
+            "stage": "PRELIM",
+            "amount": 359.5,
+            "timestamp": "2026-05-20T11:45:21.075651500"
+        },
+        {
+            "type": "TUITION",
+            "username": "Sino",
+            "stage": "MIDTERM",
+            "amount": 359.5,
+            "timestamp": "2026-05-20T11:45:21.075651500"
+        },
+        {
+            "type": "TUITION",
+            "username": "Sino",
+            "stage": "FINALS",
+            "amount": 359.5,
+            "timestamp": "2026-05-20T11:45:21.075651500"
+        }
+    ]
+]
